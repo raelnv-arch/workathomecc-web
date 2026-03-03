@@ -21,6 +21,7 @@ export default function Home() {
               <a href="#about" className="text-blue-100 hover:text-white transition">About</a>
               <a href="#focus" className="text-blue-100 hover:text-white transition">Focus</a>
               <a href="#services" className="text-blue-100 hover:text-white transition">Services</a>
+              <a href="#team" className="text-blue-100 hover:text-white transition">Team</a>
               <a href="#contact" className="text-blue-100 hover:text-white transition">Contact</a>
               <a href="/opportunities" className="text-[#4caf50] hover:text-green-400 transition">Opportunities</a>
               <a href="#contact" className="inline-flex items-center justify-center px-6 py-2.5 ml-4 border border-transparent text-sm font-bold rounded-full text-[#051124] bg-gradient-to-r from-[#4caf50] to-[#3d8c40] hover:from-[#5cdb61] hover:to-[#4caf50] transition-all duration-300 shadow-[0_0_20px_rgba(76,175,80,0.3)] hover:shadow-[0_0_30px_rgba(76,175,80,0.5)]">
@@ -401,6 +402,86 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Meet the Team Section */}
+      <section id="team" className="py-24 bg-slate-50 relative border-b border-slate-100 scroll-mt-20">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.5 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-[#4caf50] font-bold uppercase tracking-widest text-sm mb-4">Meet the Team</h2>
+            <h3 className="text-[#0f346c] text-3xl md:text-5xl font-extrabold font-heading mb-6 leading-tight">
+              The Leadership Driving Your Success
+            </h3>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-10">
+            {/* Team Member 1 */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col items-center text-center group border border-slate-100"
+            >
+              <div className="w-full relative h-[350px]">
+                <Image src="/team-3.jpg" alt="Liz Gonzalez" fill className="object-cover object-top group-hover:scale-105 transition-transform duration-500" />
+              </div>
+              <div className="p-8">
+                <h4 className="text-xl font-bold text-[#0f346c] mb-1 font-heading">Liz Gonzalez</h4>
+                <p className="text-[#4caf50] font-semibold text-xs mb-4 uppercase tracking-wide">CEO / Managing Partner</p>
+                <p className="text-slate-600 text-sm leading-relaxed">
+                  Oversees campaign success, staff and leadership development, and strategic operational growth while serving as the lead problem-solver to keep teams aligned and performance on track.
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Team Member 2 */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col items-center text-center group border border-slate-100"
+            >
+              <div className="w-full relative h-[350px]">
+                <Image src="/team-2.jpg" alt="Fernanda Soto" fill className="object-cover object-top group-hover:scale-105 transition-transform duration-500" />
+              </div>
+              <div className="p-8">
+                <h4 className="text-xl font-bold text-[#0f346c] mb-1 font-heading">Fernanda Soto</h4>
+                <p className="text-[#4caf50] font-semibold text-xs mb-4 uppercase tracking-wide">Administrative Operations Manager</p>
+                <p className="text-slate-600 text-sm leading-relaxed">
+                  Provides operational management support, strengthens human relations, and oversees staff profiling, performance and quality to ensure efficient, well-aligned team operations.
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Team Member 3 */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col items-center text-center group border border-slate-100"
+            >
+              <div className="w-full relative h-[350px]">
+                <Image src="/team-1.jpg" alt="Aldo Perez" fill className="object-cover object-top group-hover:scale-105 transition-transform duration-500" />
+              </div>
+              <div className="p-8">
+                <h4 className="text-xl font-bold text-[#0f346c] mb-1 font-heading">Aldo Perez</h4>
+                <p className="text-[#4caf50] font-semibold text-xs mb-4 uppercase tracking-wide">Partner, CFO & AI Tech Developer</p>
+                <p className="text-slate-600 text-sm leading-relaxed">
+                  Leads financial strategy while driving AI application development and overseeing technology infrastructure to support scalable, data-driven operations.
+                </p>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
       {/* Footer */}
       <footer className="bg-[#0f346c] text-white py-16 border-t-[10px] border-[#4caf50]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-4 gap-12">
@@ -419,6 +500,7 @@ export default function Home() {
               <li><a href="#about" className="hover:text-white transition">About Us</a></li>
               <li><a href="#focus" className="hover:text-white transition">Our Focus</a></li>
               <li><a href="#services" className="hover:text-white transition">Services</a></li>
+              <li><a href="#team" className="hover:text-white transition">Meet the Team</a></li>
               <li><a href="#opportunities" className="hover:text-white transition">Careers</a></li>
             </ul>
           </div>

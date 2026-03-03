@@ -69,6 +69,84 @@ export default function Home() {
         </motion.div>
       </header>
 
+      {/* About Us Section */}
+      <section id="about" className="py-24 bg-white relative scroll-mt-20 border-b border-slate-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.5 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-[#4caf50] font-bold uppercase tracking-widest text-sm mb-4">About Us</h2>
+            <h3 className="text-[#0f346c] text-3xl md:text-5xl font-extrabold font-heading mb-6 leading-tight">
+              Structured Remote Teams.<br />Real-Time Visibility.<br /><span className="text-[#4caf50]">BIG Results.</span>
+            </h3>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="prose prose-lg text-slate-600 max-w-none space-y-6"
+          >
+            <p className="text-xl font-medium text-[#0f346c] leading-relaxed text-center mb-10">
+              At Work At Home, we believe growth should feel clear, not complicated. For over a decade, we've partnered with companies that want to scale confidently without losing control of performance, culture, or customer experience.
+            </p>
+            <p>
+              We've seen what happens when remote teams operate without visibility, it creates uncertainty. And uncertainty slows growth. That's why we built something different. We don't just provide remote agents. We build <strong className="text-[#0f346c]">structured teams</strong> supported by leadership, accountability, and systems that let you see exactly what's happening in real time.
+            </p>
+            <div className="my-10 p-8 bg-blue-50 border-l-4 border-[#4caf50] rounded-r-2xl shadow-sm italic text-lg text-[#0f346c]">
+              "Because remote work without visibility is a risk. Remote work with the right infrastructure becomes a growth engine."
+            </div>
+
+            <h4 className="text-2xl font-bold text-[#0f346c] mt-12 mb-4 font-heading">Eliminate the Guesswork</h4>
+            <p>
+              Our proprietary <strong className="text-[#0f346c]">Focus Portal</strong> was created to eliminate guesswork. Instead of waiting for reports, wondering about performance, or reacting after problems surface, you have live access to the metrics that matter most. You always know:
+            </p>
+
+            <ul className="grid sm:grid-cols-2 gap-4 my-8 list-none pl-0">
+              <li className="flex items-start bg-white p-4 rounded-xl shadow-sm border border-slate-100">
+                <svg className="w-6 h-6 text-[#4caf50] mr-3 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                <span className="text-sm font-semibold">Where your resources are</span>
+              </li>
+              <li className="flex items-start bg-white p-4 rounded-xl shadow-sm border border-slate-100">
+                <svg className="w-6 h-6 text-[#4caf50] mr-3 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                <span className="text-sm font-semibold">How your team is performing</span>
+              </li>
+              <li className="flex items-start bg-white p-4 rounded-xl shadow-sm border border-slate-100">
+                <svg className="w-6 h-6 text-[#4caf50] mr-3 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                <span className="text-sm font-semibold">How performance impacts revenue, CLV, and churn</span>
+              </li>
+              <li className="flex items-start bg-white p-4 rounded-xl shadow-sm border border-slate-100">
+                <svg className="w-6 h-6 text-[#4caf50] mr-3 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                <span className="text-sm font-semibold">Where opportunities exist to improve</span>
+              </li>
+            </ul>
+
+            <p className="font-semibold text-lg text-[#0f346c] text-center mb-10">
+              No delays. No blind spots. No surprises.<br />
+              <span className="text-[#4caf50]">Transparency isn't a feature for us, it's a responsibility.</span>
+            </p>
+
+            <h4 className="text-2xl font-bold text-[#0f346c] mt-12 mb-4 font-heading">More Than Filling Seats</h4>
+            <p>
+              We carefully recruit, train, and coach professionals who align with your standards. We provide continuous oversight, clear performance benchmarks, and leadership support to ensure your remote team protects your brand and drives results.
+            </p>
+            <div className="flex justify-center my-10">
+              <span className="inline-block px-8 py-4 bg-[#0f346c] text-white font-bold rounded-lg shadow-lg text-center text-sm md:text-base tracking-wide uppercase border-b-4 border-[#4caf50]">
+                Stability + Systems + Visibility = Sustainable Growth
+              </span>
+            </div>
+            <p className="text-center font-medium max-w-3xl mx-auto pb-8">
+              Work At Home was built on the belief that strong partnerships and disciplined systems create long-term success. We are here to help you scale with clarity, operate with confidence, and achieve BIG results, under family values.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Focus Section (Built For Success) */}
       <section id="focus" className="py-24 bg-white relative scroll-mt-10 overflow-hidden">
         <motion.div

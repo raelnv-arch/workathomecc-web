@@ -11,11 +11,11 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="flex justify-between h-20 items-center">
             <div className="flex items-center relative z-50">
-              <a href="/" aria-label="Go to homepage top">
+              <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} aria-label="Go to homepage top" className="focus:outline-none cursor-pointer">
                 <div className="relative top-4 filter drop-shadow-xl bg-[#0f346c] rounded-full p-2 border-4 border-[#0f346c] transition-transform hover:scale-105">
                   <img src="/logo.png" alt="Work@Home Solutions" className="h-28 w-auto object-contain" />
                 </div>
-              </a>
+              </button>
             </div>
             <div className="hidden md:flex items-center space-x-8 font-heading font-semibold text-sm uppercase tracking-wide">
               <a href="#about" className="text-blue-100 hover:text-white transition">About</a>

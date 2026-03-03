@@ -427,8 +427,8 @@ export default function Home() {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col items-center text-center group border border-slate-100"
             >
-              <div className="w-full relative h-[420px] overflow-hidden">
-                <Image src="/team-3.jpg" alt="Liz Gonzalez" fill className="object-cover object-top scale-[1.15] origin-[50%_30%] group-hover:scale-[1.20] transition-transform duration-500" />
+              <div className="w-full relative h-[350px]">
+                <Image src="/team-3.jpg" alt="Liz Gonzalez" fill className="object-cover object-top group-hover:scale-105 transition-transform duration-500" />
               </div>
               <div className="p-8">
                 <h4 className="text-xl font-bold text-[#0f346c] mb-1 font-heading">Liz Gonzalez</h4>

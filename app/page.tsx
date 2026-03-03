@@ -501,7 +501,7 @@ export default function Home() {
               <li><a href="#focus" className="hover:text-white transition">Our Focus</a></li>
               <li><a href="#services" className="hover:text-white transition">Services</a></li>
               <li><a href="#team" className="hover:text-white transition">Meet the Team</a></li>
-              <li><a href="#opportunities" className="hover:text-white transition">Careers</a></li>
+              <li><a href="/opportunities" className="hover:text-white transition">Careers</a></li>
             </ul>
           </div>
 

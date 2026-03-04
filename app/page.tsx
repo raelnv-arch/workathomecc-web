@@ -60,7 +60,7 @@ export default function Home() {
               transition={{ duration: 0.3 }}
               className="md:hidden bg-[#0a2349] border-t border-[#1a4a8c] overflow-hidden"
             >
-              <div className="px-4 py-6 space-y-4 flex flex-col font-heading font-semibold text-sm uppercase tracking-wide">
+              <div className="px-4 py-6 pt-12 space-y-4 flex flex-col font-heading font-semibold text-sm uppercase tracking-wide">
                 <a onClick={() => setIsMobileMenuOpen(false)} href="#about" className="block text-blue-100 hover:text-white hover:bg-[#1a4a8c] px-4 py-2 rounded-lg transition">About</a>
                 <a onClick={() => setIsMobileMenuOpen(false)} href="#focus" className="block text-blue-100 hover:text-white hover:bg-[#1a4a8c] px-4 py-2 rounded-lg transition">Focus</a>
                 <a onClick={() => setIsMobileMenuOpen(false)} href="#services" className="block text-blue-100 hover:text-white hover:bg-[#1a4a8c] px-4 py-2 rounded-lg transition">Services</a>

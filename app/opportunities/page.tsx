@@ -1,17 +1,21 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
 
 export default function OpportunitiesPage() {
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
     return (
         <main className="min-h-screen bg-white text-slate-800 font-sans selection:bg-[#4caf50] selection:text-white">
 
             {/* Navigation */}
             <nav className="bg-[#0f346c] shadow-lg fixed w-full z-50 top-0">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-                    <div className="flex justify-between h-20 items-center">
-                        <div className="flex items-center relative z-50">
+                    <div className="flex justify-end md:justify-between h-20 items-center w-full">
+                        {/* Logo - Centered on mobile, left on desktop */}
+                        <div className="absolute left-1/2 -translate-x-1/2 md:static md:transform-none flex items-center z-50">
                             <a href="/">
                                 <div className="relative top-4 filter drop-shadow-xl bg-[#0f346c] rounded-full p-2 border-4 border-[#0f346c] transition-transform hover:scale-105">
                                     <img src="/logo.png" alt="Work@Home Solutions" className="h-28 w-auto object-contain" />
@@ -28,8 +32,49 @@ export default function OpportunitiesPage() {
                                 Partner With Us
                             </a>
                         </div>
+
+                        {/* Mobile Menu Button */}
+                        <div className="md:hidden flex items-center">
+                            <button
+                                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                                className="text-white hover:text-[#4caf50] focus:outline-none"
+                            >
+                                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    {isMobileMenuOpen ? (
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                    ) : (
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                                    )}
+                                </svg>
+                            </button>
+                        </div>
                     </div>
                 </div>
+
+                {/* Mobile Navigation Menu Dropdown */}
+                <AnimatePresence>
+                    {isMobileMenuOpen && (
+                        <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.3 }}
+                            className="md:hidden bg-[#0a2349] border-t border-[#1a4a8c] overflow-hidden"
+                        >
+                            <div className="px-4 py-6 pt-12 space-y-4 flex flex-col font-heading font-semibold text-sm uppercase tracking-wide items-center w-full">
+                                <a onClick={() => setIsMobileMenuOpen(false)} href="/#about" className="block text-blue-100 w-full text-center hover:text-white hover:bg-[#1a4a8c] px-4 py-3 rounded-lg transition">About</a>
+                                <a onClick={() => setIsMobileMenuOpen(false)} href="/#focus" className="block text-blue-100 w-full text-center hover:text-white hover:bg-[#1a4a8c] px-4 py-3 rounded-lg transition">Focus</a>
+                                <a onClick={() => setIsMobileMenuOpen(false)} href="/#services" className="block text-blue-100 w-full text-center hover:text-white hover:bg-[#1a4a8c] px-4 py-3 rounded-lg transition">Services</a>
+                                <a onClick={() => setIsMobileMenuOpen(false)} href="/#team" className="block text-blue-100 w-full text-center hover:text-white hover:bg-[#1a4a8c] px-4 py-3 rounded-lg transition">Team</a>
+                                <a onClick={() => setIsMobileMenuOpen(false)} href="/#contact" className="block text-blue-100 w-full text-center hover:text-white hover:bg-[#1a4a8c] px-4 py-3 rounded-lg transition">Contact</a>
+                                <a onClick={() => setIsMobileMenuOpen(false)} href="/opportunities" className="block text-[#4caf50] w-full text-center hover:text-green-400 hover:bg-[#1a4a8c] px-4 py-3 rounded-lg transition">Opportunities</a>
+                                <a onClick={() => setIsMobileMenuOpen(false)} href="/#contact" className="mt-4 block w-full text-center px-6 py-4 border border-transparent text-sm font-bold rounded-lg text-[#051124] bg-gradient-to-r from-[#4caf50] to-[#3d8c40] hover:from-[#5cdb61] hover:to-[#4caf50] shadow-[0_0_15px_rgba(76,175,80,0.3)]">
+                                    Partner With Us
+                                </a>
+                            </div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
             </nav>
 
             {/* Hero Section */}

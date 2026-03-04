@@ -12,8 +12,9 @@ export default function Home() {
       {/* Navigation */}
       <nav className="bg-[#0f346c] shadow-lg fixed w-full z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <div className="flex justify-between h-20 items-center">
-            <div className="flex items-center relative z-50">
+          <div className="flex justify-end md:justify-between h-20 items-center w-full">
+            {/* Logo - Centered on mobile, left on desktop */}
+            <div className="absolute left-1/2 -translate-x-1/2 md:static md:transform-none flex items-center z-50">
               <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} aria-label="Go to homepage top" className="focus:outline-none cursor-pointer">
                 <div className="relative top-4 filter drop-shadow-xl bg-[#0f346c] rounded-full p-2 border-4 border-[#0f346c] transition-transform hover:scale-105">
                   <img src="/logo.png" alt="Work@Home Solutions" className="h-28 w-auto object-contain" />

@@ -60,14 +60,14 @@ export default function Home() {
               transition={{ duration: 0.3 }}
               className="md:hidden bg-[#0a2349] border-t border-[#1a4a8c] overflow-hidden"
             >
-              <div className="px-4 py-6 pt-12 space-y-4 flex flex-col font-heading font-semibold text-sm uppercase tracking-wide">
-                <a onClick={() => setIsMobileMenuOpen(false)} href="#about" className="block text-blue-100 hover:text-white hover:bg-[#1a4a8c] px-4 py-2 rounded-lg transition">About</a>
-                <a onClick={() => setIsMobileMenuOpen(false)} href="#focus" className="block text-blue-100 hover:text-white hover:bg-[#1a4a8c] px-4 py-2 rounded-lg transition">Focus</a>
-                <a onClick={() => setIsMobileMenuOpen(false)} href="#services" className="block text-blue-100 hover:text-white hover:bg-[#1a4a8c] px-4 py-2 rounded-lg transition">Services</a>
-                <a onClick={() => setIsMobileMenuOpen(false)} href="#team" className="block text-blue-100 hover:text-white hover:bg-[#1a4a8c] px-4 py-2 rounded-lg transition">Team</a>
-                <a onClick={() => setIsMobileMenuOpen(false)} href="#contact" className="block text-blue-100 hover:text-white hover:bg-[#1a4a8c] px-4 py-2 rounded-lg transition">Contact</a>
-                <a onClick={() => setIsMobileMenuOpen(false)} href="/opportunities" className="block text-[#4caf50] hover:text-green-400 hover:bg-[#1a4a8c] px-4 py-2 rounded-lg transition">Opportunities</a>
-                <a onClick={() => setIsMobileMenuOpen(false)} href="#contact" className="mt-4 block text-center px-6 py-3 border border-transparent text-sm font-bold rounded-lg text-[#051124] bg-gradient-to-r from-[#4caf50] to-[#3d8c40] hover:from-[#5cdb61] hover:to-[#4caf50] shadow-[0_0_15px_rgba(76,175,80,0.3)]">
+              <div className="px-4 py-6 pt-12 space-y-4 flex flex-col font-heading font-semibold text-sm uppercase tracking-wide items-center w-full">
+                <a onClick={() => setIsMobileMenuOpen(false)} href="/#about" className="block text-blue-100 w-full text-center hover:text-white hover:bg-[#1a4a8c] px-4 py-3 rounded-lg transition">About</a>
+                <a onClick={() => setIsMobileMenuOpen(false)} href="/#focus" className="block text-blue-100 w-full text-center hover:text-white hover:bg-[#1a4a8c] px-4 py-3 rounded-lg transition">Focus</a>
+                <a onClick={() => setIsMobileMenuOpen(false)} href="/#services" className="block text-blue-100 w-full text-center hover:text-white hover:bg-[#1a4a8c] px-4 py-3 rounded-lg transition">Services</a>
+                <a onClick={() => setIsMobileMenuOpen(false)} href="/#team" className="block text-blue-100 w-full text-center hover:text-white hover:bg-[#1a4a8c] px-4 py-3 rounded-lg transition">Team</a>
+                <a onClick={() => setIsMobileMenuOpen(false)} href="/#contact" className="block text-blue-100 w-full text-center hover:text-white hover:bg-[#1a4a8c] px-4 py-3 rounded-lg transition">Contact</a>
+                <a onClick={() => setIsMobileMenuOpen(false)} href="/opportunities" className="block text-[#4caf50] w-full text-center hover:text-green-400 hover:bg-[#1a4a8c] px-4 py-3 rounded-lg transition">Opportunities</a>
+                <a onClick={() => setIsMobileMenuOpen(false)} href="/#contact" className="mt-4 block w-full text-center px-6 py-4 border border-transparent text-sm font-bold rounded-lg text-[#051124] bg-gradient-to-r from-[#4caf50] to-[#3d8c40] hover:from-[#5cdb61] hover:to-[#4caf50] shadow-[0_0_15px_rgba(76,175,80,0.3)]">
                   Partner With Us
                 </a>
               </div>

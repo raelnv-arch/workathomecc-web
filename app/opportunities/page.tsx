@@ -16,7 +16,7 @@ export default function OpportunitiesPage() {
                     <div className="flex justify-end md:justify-between h-20 items-center w-full">
                         {/* Logo - Centered on mobile, left on desktop */}
                         <div className="absolute left-1/2 -translate-x-1/2 md:static md:transform-none flex items-center z-50">
-                            <a href="/">
+                            <a href="/" aria-label="Go to homepage" className="focus:outline-none cursor-pointer">
                                 <div className="relative top-4 filter drop-shadow-xl bg-[#0f346c] rounded-full p-2 border-4 border-[#0f346c] transition-transform hover:scale-105">
                                     <img src="/logo.png" alt="Work@Home Solutions" className="h-28 w-auto object-contain" />
                                 </div>

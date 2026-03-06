@@ -119,24 +119,41 @@ export default function Home() {
 
 
 
-      {/* Focus Section (Built For Success) */}
+      {/* Focus Section (Built For Success & Video Embed) */}
       <section id="focus" className="py-24 bg-white relative scroll-mt-10 overflow-hidden">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
-          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-16 items-center"
+          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-16 items-start"
         >
-          <div className="bg-gray-100 rounded-xl flex items-center justify-center relative shadow-2xl overflow-hidden aspect-video transform hover:scale-[1.02] transition duration-500">
-            <Image src="/service_white_label.png" alt="Hosted Workforce Technology" fill className="object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0f346c]/90 to-transparent"></div>
-            <div className="absolute bottom-0 left-0 right-0 p-8 text-white backdrop-blur-sm">
-              <h4 className="font-bold text-2xl mb-2 font-heading">Executive-Level Transparency: Powered by Focus</h4>
-              <p className="text-sm opacity-90 leading-relaxed max-w-lg">The Focus Portal provides leadership-grade insight into team performance and operational efficiency. Live dashboards, performance analytics, and structured reporting allow you to connect agent output directly to revenue impact, CLV, and churn reduction. Because leadership should never operate in the dark.</p>
+          {/* Left Column: Video & Transparency Card */}
+          <div className="flex flex-col gap-6">
+            {/* Vimeo Embed */}
+            <div className="rounded-2xl shadow-2xl overflow-hidden aspect-video w-full bg-slate-900 border border-slate-200">
+              <iframe
+                src="https://player.vimeo.com/video/1170844556?h=sv&title=0&byline=0&portrait=0"
+                className="w-full h-full"
+                frameBorder="0"
+                allow="autoplay; fullscreen; picture-in-picture"
+                allowFullScreen
+                title="Work@Home Solutions Overview"
+              ></iframe>
+            </div>
+
+            {/* Shifted Transparency Card */}
+            <div className="bg-[#0f346c] rounded-2xl p-8 text-white shadow-xl relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-[#4caf50] opacity-10 rounded-full blur-3xl group-hover:opacity-20 transition-opacity"></div>
+              <h4 className="font-bold text-2xl mb-3 font-heading text-white">Executive-Level Transparency:<br /> <span className="text-[#4caf50]">Powered by Focus</span></h4>
+              <p className="text-sm text-blue-100 leading-relaxed">
+                The Focus Portal provides leadership-grade insight into team performance and operational efficiency. Live dashboards, performance analytics, and structured reporting allow you to connect agent output directly to revenue impact, CLV, and churn reduction. Because leadership should never operate in the dark.
+              </p>
             </div>
           </div>
-          <div>
+
+          {/* Right Column: Built for Success Text */}
+          <div className="sticky top-32 pt-4">
             <h2 className="text-4xl lg:text-5xl font-extrabold text-[#0f346c] mb-6 font-heading">Built For <br /><span className="text-[#4caf50]">Success</span></h2>
             <p className="text-lg text-slate-600 mb-6 leading-relaxed">
               We don't just answer phones; we build relationships. Our distributed workforce model ensures you get the best talent regardless of geography, while maintaining strict security and quality controls.

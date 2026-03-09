@@ -19,6 +19,6 @@
 /* Push nav content inward on laptop screens so the logo doesn't clip at viewport edge */
 @media (min-width: 768px) and (max-width: 1399px) {
   #nav-container {
-    padding-left: 5rem !important;
+    padding-left: 10rem !important;
   }
 }

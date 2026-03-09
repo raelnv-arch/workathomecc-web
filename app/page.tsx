@@ -12,16 +12,14 @@ export default function Home() {
       {/* Navigation */}
       <nav className="bg-[#0f346c] shadow-lg fixed w-full z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <div className="flex justify-end md:justify-between h-20 items-center w-full">
+          <div className="flex justify-end lg:justify-between h-20 items-center w-full">
             {/* Logo - Centered on mobile, left on desktop */}
-            <div className="absolute left-1/2 -translate-x-1/2 md:static md:transform-none flex items-center z-50">
-              <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} aria-label="Go to homepage top" className="focus:outline-none cursor-pointer">
-                <div className="relative top-4 filter drop-shadow-xl bg-[#0f346c] rounded-full p-2 border-4 border-[#0f346c] transition-transform hover:scale-105">
-                  <img src="/logo.png" alt="Work@Home Solutions" className="h-28 w-auto object-contain" />
-                </div>
+            <div className="absolute left-1/2 -translate-x-1/2 lg:static lg:transform-none flex items-center z-50 shrink-0">
+              <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} aria-label="Go to homepage top" className="focus:outline-none cursor-pointer group">
+                <img src="/logo.png" alt="Work@Home Solutions" className="h-10 sm:h-12 lg:h-16 w-auto object-contain transition-transform group-hover:scale-105" />
               </button>
             </div>
-            <div className="hidden md:flex items-center space-x-8 font-heading font-semibold text-sm uppercase tracking-wide">
+            <div className="hidden lg:flex items-center space-x-4 lg:space-x-6 xl:space-x-8 font-heading font-semibold text-xs xl:text-sm uppercase tracking-wide">
               <a href="#about" className="text-blue-100 hover:text-white transition">About</a>
               <a href="#focus" className="text-blue-100 hover:text-white transition">Focus</a>
               <a href="#services" className="text-blue-100 hover:text-white transition">Services</a>
@@ -34,7 +32,7 @@ export default function Home() {
             </div>
 
             {/* Mobile Menu Button */}
-            <div className="md:hidden flex items-center">
+            <div className="lg:hidden flex items-center">
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 className="text-white hover:text-[#4caf50] focus:outline-none"
@@ -59,7 +57,7 @@ export default function Home() {
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="md:hidden bg-[#0a2349] border-t border-[#1a4a8c] overflow-hidden"
+              className="lg:hidden bg-[#0a2349] border-t border-[#1a4a8c] overflow-hidden"
             >
               <div className="px-4 py-6 pt-12 space-y-4 flex flex-col font-heading font-semibold text-sm uppercase tracking-wide items-center w-full">
                 <a onClick={(e) => { e.preventDefault(); setIsMobileMenuOpen(false); setTimeout(() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' }), 300); }} href="#about" className="block text-blue-100 w-full text-center hover:text-white hover:bg-[#1a4a8c] px-4 py-3 rounded-lg transition">About</a>

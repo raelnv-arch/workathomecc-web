@@ -553,9 +553,8 @@ html { scroll-behavior: smooth; }
 .opps-apply-head h2 { font-family: var(--disp); font-weight: 900; font-size: clamp(28px, 3.2vw, 44px); line-height: 1.08; letter-spacing: -.02em; text-wrap: balance; margin-bottom: 20px; }
 .opps-apply-head p { color: #33415C; font-size: 16px; max-width: 64ch; margin-bottom: 14px; }
 .opps-apply-head strong { color: var(--ink); font-weight: 700; }
-.form-embed { background: #fff; border: 1px solid var(--hair-l); border-radius: 12px; overflow: hidden; position: relative; box-shadow: 0 30px 70px -35px rgba(12, 24, 48, .25); }
-.form-embed::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(to right, var(--navy), var(--signal)); z-index: 2; }
-.form-embed iframe { display: block; width: 100%; border: 0; }
+.form-embed { background: var(--navy); border-radius: 16px; overflow: hidden; position: relative; padding: 16px; box-shadow: 0 40px 90px -45px rgba(6, 13, 28, .55); }
+.form-embed iframe { display: block; width: 100%; border: 0; border-radius: 8px; background: #fff; }
 
 @media (max-width: 720px) {
   .perks-grid { grid-template-columns: 1fr; }

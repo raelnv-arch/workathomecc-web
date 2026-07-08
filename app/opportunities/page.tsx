@@ -37,10 +37,20 @@ export default function OpportunitiesPage() {
     }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
     root.querySelectorAll('.rv').forEach((el) => io.observe(el));
 
+    /* Pause the hero footage when it scrolls off-screen */
+    const heroVid = root.querySelector<HTMLVideoElement>('.hero-video');
+    const heroVidIO = heroVid
+      ? new IntersectionObserver((entries) => {
+          entries.forEach((e) => { if (e.isIntersecting) heroVid.play().catch(() => {}); else heroVid.pause(); });
+        }, { threshold: 0.1 })
+      : null;
+    if (heroVid && heroVidIO) heroVidIO.observe(heroVid);
+
     return () => {
       clearTimeout(loadedTimer);
       window.removeEventListener('scroll', onScroll);
       io.disconnect();
+      heroVidIO?.disconnect();
     };
   }, []);
 
@@ -98,6 +108,7 @@ export default function OpportunitiesPage() {
           <video
             className="hero-video"
             src="/hero-takes/take-e.mp4"
+            poster="/hero-takes/take-e.jpg"
             autoPlay muted loop playsInline
             preload="metadata"
             aria-hidden="true"

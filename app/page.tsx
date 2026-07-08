@@ -21,6 +21,28 @@ export default function Home() {
   const heroInnerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
+  /* Scroll-spy: highlight the nav link for the section currently in view */
+  useEffect(() => {
+    const nav = navRef.current;
+    if (!nav) return;
+    const links = Array.from(nav.querySelectorAll<HTMLAnchorElement>('.nav-links a[href^="#"]:not(.btn)'));
+    const map = new Map<Element, HTMLAnchorElement>();
+    links.forEach((a) => {
+      const el = document.querySelector(a.getAttribute('href')!);
+      if (el) map.set(el, a);
+    });
+    if (!map.size) return;
+    const spy = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        links.forEach((l) => l.classList.remove('active'));
+        map.get(e.target)?.classList.add('active');
+      });
+    }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+    map.forEach((_, el) => spy.observe(el));
+    return () => spy.disconnect();
+  }, []);
+
   useEffect(() => {
     const root = rootRef.current;
     const nav = navRef.current;
@@ -301,6 +323,7 @@ export default function Home() {
             <video
               className="hero-video"
               src="/hero-takes/take-f.mp4"
+              poster="/hero-takes/take-f.jpg"
               autoPlay muted loop playsInline
               preload="metadata"
               aria-hidden="true"
@@ -347,6 +370,7 @@ export default function Home() {
             <video
               data-ambient
               src="/story-takes/story-a.mp4"
+              poster="/story-takes/story-a.jpg"
               muted loop playsInline preload="metadata"
               onError={() => setStoryOk(false)}
             />
@@ -428,6 +452,7 @@ export default function Home() {
             <video
               data-ambient
               src="/story-takes/story-b.mp4"
+              poster="/story-takes/story-b.jpg"
               muted loop playsInline preload="metadata"
               onError={() => setStoryOk(false)}
             />
@@ -516,7 +541,7 @@ export default function Home() {
               </p>
               <div className="contacts rv rv4">
                 <a className="contact-chip"
-                  href="https://api.whatsapp.com/send/?phone=526634361001&text=Welcome+to+Work%40Home+Call+Center%2C&type=phone_number&app_absent=0"
+                  href="https://wa.me/526634361001?text=Welcome%20to%20Work%40Home%20Call%20Center%2C"
                   target="_blank" rel="noopener noreferrer">
                   <span>WhatsApp</span><b>+52 663 436 1001</b>
                 </a>

@@ -26,6 +26,31 @@ export const metadata = {
     },
 };
 
+export const viewport = {
+    themeColor: '#060D1C',
+};
+
+const orgSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Work@Home Call Center',
+    url: 'https://workathomecc.com',
+    logo: 'https://workathomecc.com/logo.png',
+    description:
+        'Managed remote call-center operations — top-tier bilingual talent, hosted infrastructure, and executive-level transparency.',
+    email: 'info@workathomecc.com',
+    telephone: '+526634361001',
+    address: {
+        '@type': 'PostalAddress',
+        streetAddress: '175 SW 7th Street, Suite 1517-336',
+        addressLocality: 'Miami',
+        addressRegion: 'FL',
+        postalCode: '33130',
+        addressCountry: 'US',
+    },
+    sameAs: ['https://www.linkedin.com/company/wahcc/', 'https://www.facebook.com/workathomecc'],
+};
+
 export default function RootLayout({
     children,
 }: {
@@ -34,6 +59,7 @@ export default function RootLayout({
     return (
         <html lang="en" className={`${disp.variable} ${body.variable} ${mono.variable}`}>
             <body className="antialiased">
+                <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }} />
                 {children}
             </body>
         </html>

@@ -509,6 +509,22 @@ html { scroll-behavior: smooth; }
 .foot-social a { display: inline-flex; color: var(--mist); transition: color .25s var(--ease), transform .25s var(--ease); }
 .foot-social a:hover { color: var(--paper); transform: translateY(-2px); }
 .foot-social svg { width: 18px; height: 18px; fill: currentColor; display: block; }
+
+/* ---------- Scroll-spy (active nav link) ---------- */
+.nav-links a:not(.btn) { position: relative; }
+.nav-links a:not(.btn).active { color: var(--paper); }
+.nav-links a:not(.btn).active::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -3px;
+  height: 2px; background: var(--paper); border-radius: 2px;
+}
+
+/* ---------- 404 ---------- */
+.notfound { background: var(--night); color: var(--paper); min-height: 100vh; min-height: 100svh; display: grid; place-items: center; text-align: center; padding: 90px 0; }
+.notfound-inner { max-width: 640px; }
+.nf-code { font-family: var(--mono); font-size: 12px; letter-spacing: .28em; color: var(--mist-ink); margin-bottom: 26px; }
+.nf-title { font-family: var(--disp); font-weight: 900; font-size: clamp(34px, 6vw, 64px); letter-spacing: -.02em; line-height: 1.04; margin-bottom: 20px; }
+.nf-sub { color: var(--mist); font-size: 17px; max-width: 46ch; margin: 0 auto 40px; line-height: 1.6; }
+.nf-cta { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
 .foot-base {
   margin-top: 44px; padding-top: 22px; border-top: 1px solid var(--hair-d);
   display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;

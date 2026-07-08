@@ -7,6 +7,10 @@ import { useEffect, useRef, useState } from 'react';
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [reelPlaying, setReelPlaying] = useState(false);
+  /* Hero footage layer: renders over the constellation canvas and crossfades in
+     when the file exists; falls back to the canvas silently when it doesn't. */
+  const [heroVideoOk, setHeroVideoOk] = useState(true);
+  const [storyOk, setStoryOk] = useState(true);
 
   const rootRef = useRef<HTMLElement>(null);
   const navRef = useRef<HTMLElement>(null);
@@ -15,10 +19,6 @@ export default function Home() {
   const heroBgRef = useRef<HTMLDivElement>(null);
   const heroInnerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const scrubRef = useRef<HTMLDivElement>(null);
-  const railFillRef = useRef<HTMLElement>(null);
-  const tourPctRef = useRef<HTMLSpanElement>(null);
-  const revlineRef = useRef<SVGPolylineElement>(null);
 
   useEffect(() => {
     const root = rootRef.current;
@@ -28,20 +28,11 @@ export default function Home() {
     const heroBg = heroBgRef.current;
     const heroInner = heroInnerRef.current;
     const cv = canvasRef.current;
-    const scrubEl = scrubRef.current;
-    const railFill = railFillRef.current;
-    const tourPct = tourPctRef.current;
-    const revline = revlineRef.current;
-    if (!root || !nav || !pagebar || !hero || !heroBg || !heroInner || !cv || !scrubEl || !railFill || !tourPct) return;
+    if (!root || !nav || !pagebar || !hero || !heroBg || !heroInner || !cv) return;
 
     const prm = window.matchMedia('(prefers-reduced-motion: reduce)');
     const mobileQ = window.matchMedia('(max-width: 920px)');
     const isFlat = () => prm.matches || mobileQ.matches;
-
-    const beats = Array.from(root.querySelectorAll<HTMLElement>('.beat'));
-    const panels = Array.from(root.querySelectorAll<HTMLElement>('.panel'));
-    const kpiEls = Array.from(root.querySelectorAll<HTMLElement>('[data-kpi]'));
-    const barEls = Array.from(root.querySelectorAll<HTMLElement>('.kpi .bars i'));
 
     let alive = true;
     let ticking = false;
@@ -51,28 +42,16 @@ export default function Home() {
     requestAnimationFrame(() => { if (alive) root.classList.add('loaded'); });
     const loadedTimer = setTimeout(() => root.classList.add('loaded'), 350);
 
-    const pad3 = (n: number) => { n = Math.round(n); return (n < 10 ? '00' : n < 100 ? '0' : '') + n; };
-    const clamp01 = (v: number) => (v < 0 ? 0 : v > 1 ? 1 : v);
-
-    function setBeat(idx: number, q: number) {
-      beats.forEach((b, i) => b.classList.toggle('on', i === idx));
-      panels.forEach((p, i) => p.classList.toggle('on', i === idx));
-      if (idx === 1) {
-        kpiEls.forEach((el) => {
-          const target = +(el.getAttribute('data-kpi') || 0);
-          const div = +(el.getAttribute('data-div') || 1);
-          const val = (target * Math.min(1, q * 1.6)) / div;
-          el.textContent = div > 1 ? val.toFixed(1) : String(Math.round(val));
-        });
-        barEls.forEach((el, i) => {
-          el.style.transform = 'scaleY(' + clamp01(q * 2 - i * 0.09) + ')';
-        });
-      }
-      if (idx === 2 && revline) {
-        revline.style.strokeDasharray = '1';
-        revline.style.strokeDashoffset = String(1 - Math.min(1, q * 1.3));
-      }
+    /* Hero footage: the 404 error can fire before hydration attaches onError,
+       so re-check the element's state on mount. */
+    const vidEl = root.querySelector<HTMLVideoElement>('.hero-video');
+    const dropVideo = () => setHeroVideoOk(false);
+    if (vidEl) {
+      if (vidEl.error || vidEl.networkState === 3 /* NETWORK_NO_SOURCE */) dropVideo();
+      else vidEl.addEventListener('error', dropVideo, { once: true });
     }
+
+    const clamp01 = (v: number) => (v < 0 ? 0 : v > 1 ? 1 : v);
 
     function onScroll() {
       if (!alive) return;
@@ -83,21 +62,10 @@ export default function Home() {
       const total = doc.scrollHeight - vh;
       pagebar!.style.transform = 'scaleX(' + (total > 0 ? y / total : 0) + ')';
 
-      if (!isFlat()) {
-        if (y < vh * 1.2) {
-          heroBg!.style.transform = 'translateY(' + y * 0.22 + 'px)';
-          heroInner!.style.transform = 'translateY(' + y * 0.36 + 'px)';
-          heroInner!.style.opacity = String(clamp01(1 - y / (vh * 0.85)));
-        }
-        /* document-space top: offsetTop would be relative to the positioned .focus section */
-        const top = scrubEl!.getBoundingClientRect().top + y;
-        const span = scrubEl!.offsetHeight - vh;
-        const p = clamp01((y - top) / span);
-        railFill!.style.transform = 'scaleY(' + p + ')';
-        tourPct!.textContent = pad3(p * 100);
-        const idx = p < 1 / 3 ? 0 : p < 2 / 3 ? 1 : 2;
-        const q = (p - idx / 3) * 3;
-        setBeat(idx, q);
+      if (!isFlat() && y < vh * 1.2) {
+        heroBg!.style.transform = 'translateY(' + y * 0.22 + 'px)';
+        heroInner!.style.transform = 'translateY(' + y * 0.36 + 'px)';
+        heroInner!.style.opacity = String(clamp01(1 - y / (vh * 0.85)));
       }
       ticking = false;
     }
@@ -108,24 +76,6 @@ export default function Home() {
     window.addEventListener('scroll', scrollHandler, { passive: true });
     window.addEventListener('resize', resizeHandler);
     (window as unknown as { __wahTick?: () => void }).__wahTick = onScroll;
-
-    /* Flat mode (mobile / reduced motion): show everything assembled */
-    function applyFlat() {
-      if (!isFlat()) return;
-      beats.forEach((b) => b.classList.add('on'));
-      panels.forEach((p) => p.classList.add('on'));
-      kpiEls.forEach((el) => {
-        const t = +(el.getAttribute('data-kpi') || 0);
-        const d = +(el.getAttribute('data-div') || 1);
-        el.textContent = d > 1 ? (t / d).toFixed(1) : String(t);
-      });
-      barEls.forEach((el) => { el.style.transform = 'none'; });
-      if (revline) revline.style.strokeDasharray = 'none';
-      railFill!.style.transform = 'scaleY(1)';
-      tourPct!.textContent = '100';
-    }
-    applyFlat();
-    mobileQ.addEventListener('change', applyFlat);
 
     /* Reveal on scroll */
     const io = new IntersectionObserver((entries) => {
@@ -247,7 +197,14 @@ export default function Home() {
       requestAnimationFrame(frame);
     }
 
-    const heroIO = new IntersectionObserver((entries) => { heroVisible = entries[0].isIntersecting; }, { threshold: 0 });
+    const heroIO = new IntersectionObserver((entries) => {
+      heroVisible = entries[0].isIntersecting;
+      const vid = root.querySelector<HTMLVideoElement>('.hero-video');
+      if (vid && !prm.matches) {
+        if (heroVisible) { vid.play().catch(() => { /* autoplay policy */ }); }
+        else { vid.pause(); }
+      }
+    }, { threshold: 0 });
     heroIO.observe(hero);
 
     onScroll();
@@ -255,13 +212,34 @@ export default function Home() {
     return () => {
       alive = false;
       clearTimeout(loadedTimer);
+      if (vidEl) vidEl.removeEventListener('error', dropVideo);
       window.removeEventListener('scroll', scrollHandler);
       window.removeEventListener('resize', resizeHandler);
       delete (window as unknown as { __wahTick?: () => void }).__wahTick;
-      mobileQ.removeEventListener('change', applyFlat);
       io.disconnect(); cio.disconnect(); heroIO.disconnect();
     };
   }, []);
+
+  /* Ambient loop: play only in view; hide the strip if the current file is missing.
+     Re-runs per take so the remounted <video> gets observed again. */
+  useEffect(() => {
+    const vids = Array.from(document.querySelectorAll<HTMLVideoElement>('video[data-ambient]'));
+    if (!vids.length) return;
+    const prm = window.matchMedia('(prefers-reduced-motion: reduce)');
+    /* Only v.error is authoritative here: a freshly remounted video sits in
+       networkState NETWORK_NO_SOURCE for a beat before loading even starts. */
+    for (const v of vids) { if (v.error) { setStoryOk(false); return; } }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (prm.matches) return;
+        const v = e.target as HTMLVideoElement;
+        if (e.isIntersecting) { v.play().catch(() => { /* autoplay policy */ }); }
+        else { v.pause(); }
+      });
+    }, { threshold: 0.15 });
+    vids.forEach((v) => io.observe(v));
+    return () => io.disconnect();
+  }, [storyOk]);
 
   const closeMenu = () => setMenuOpen(false);
 
@@ -278,8 +256,8 @@ export default function Home() {
           </a>
           <div className="nav-links">
             <a href="#about">About</a>
-            <a href="#services">Services</a>
             <a href="#focus">Focus</a>
+            <a href="#services">Services</a>
             <a href="#team">Team</a>
             <a href="/opportunities">Opportunities</a>
             <a href="#contact" className="btn btn-signal">Partner With Us</a>
@@ -303,8 +281,8 @@ export default function Home() {
             >
               <div className="menu-in">
                 <a href="#about" onClick={closeMenu}>About</a>
-                <a href="#services" onClick={closeMenu}>Services</a>
                 <a href="#focus" onClick={closeMenu}>Focus</a>
+                <a href="#services" onClick={closeMenu}>Services</a>
                 <a href="#team" onClick={closeMenu}>Team</a>
                 <a href="/opportunities" onClick={closeMenu}>Opportunities</a>
                 <a href="#contact" onClick={closeMenu} className="btn btn-signal">Partner With Us</a>
@@ -318,6 +296,17 @@ export default function Home() {
       <header ref={heroRef} className="hero grain" id="top">
         <div ref={heroBgRef} className="hero-bg">
           <canvas ref={canvasRef} aria-hidden="true"></canvas>
+          {heroVideoOk && (
+            <video
+              className="hero-video"
+              src="/hero-takes/take-f.mp4"
+              autoPlay muted loop playsInline
+              preload="metadata"
+              aria-hidden="true"
+              onError={() => setHeroVideoOk(false)}
+              onCanPlay={(e) => e.currentTarget.classList.add('ready')}
+            />
+          )}
         </div>
         <div className="hero-scrim"></div>
         <div ref={heroInnerRef} className="wrap hero-inner">
@@ -351,38 +340,25 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Showreel */}
-      <section className="reel" aria-label="Company overview video">
-        <div className="wrap">
-          <p className="eyebrow rv">Watch — company overview</p>
-          <div className="reel-frame rv rv2">
-            {reelPlaying ? (
-              <iframe
-                src="https://player.vimeo.com/video/1170844556?h=sv&title=0&byline=0&portrait=0&autoplay=1"
-                allow="autoplay; fullscreen; picture-in-picture"
-                allowFullScreen
-                title="Work@Home Solutions overview"
-              ></iframe>
-            ) : (
-              <button className="reel-cover" onClick={() => setReelPlaying(true)} aria-label="Play the company overview video, 2 minutes">
-                <span className="reel-play" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
-                </span>
-                <span className="reel-meta">PLAY — 02:03</span>
-              </button>
-            )}
-          </div>
-        </div>
-      </section>
-
       {/* Story / About */}
-      <section id="about" className="story">
+      <section id="about" className={`story${storyOk ? ' story-full' : ''}`}>
+        {storyOk && (
+          <div className="story-bg" aria-hidden="true">
+            <video
+              data-ambient
+              src="/story-takes/story-a.mp4"
+              muted loop playsInline preload="metadata"
+              onError={() => setStoryOk(false)}
+            />
+            <div className="story-scrim"></div>
+          </div>
+        )}
         <div className="wrap split">
           <div className="rv">
             <p className="eyebrow">About</p>
             <h2 className="story-head">Growth should feel clear, not complicated.</h2>
           </div>
-          <div className="story-copy rv rv2">
+          <div className="story-copy story-card rv rv2">
             <p>
               For over a decade, we&apos;ve partnered with companies that want to scale confidently —
               without losing control of performance, culture, or customer experience.
@@ -398,12 +374,72 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Focus Portal — tour points + company video */}
+      <section id="focus" className="focus grain">
+        <div className="wrap focus-grid">
+          <div className="rv">
+            <p className="eyebrow">Focus Portal — guided tour</p>
+            <div className="beats">
+              <div className="rail"></div>
+              <div className="beat">
+                <em>01</em>
+                <h3>Where your resources are</h3>
+                <p>Every agent, every campaign, every shift — one roster, always current.</p>
+              </div>
+              <div className="beat">
+                <em>02</em>
+                <h3>How your team is performing</h3>
+                <p>Live KPIs instead of end-of-month reports. Watch quality as it happens.</p>
+              </div>
+              <div className="beat">
+                <em>03</em>
+                <h3>How performance impacts revenue</h3>
+                <p>Connect agent output directly to revenue, CLV, and churn reduction.</p>
+              </div>
+            </div>
+          </div>
+          <div className="focus-video rv rv2">
+            <div className="reel-frame">
+              {reelPlaying ? (
+                <iframe
+                  src="https://player.vimeo.com/video/1170844556?h=sv&title=0&byline=0&portrait=0&autoplay=1"
+                  allow="autoplay; fullscreen; picture-in-picture"
+                  allowFullScreen
+                  title="Work@Home Solutions overview"
+                ></iframe>
+              ) : (
+                <button className="reel-cover" onClick={() => setReelPlaying(true)} aria-label="Play the company overview video, 2 minutes">
+                  <span className="reel-play" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
+                  </span>
+                  <span className="reel-meta">PLAY — 02:03</span>
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+        <p className="titlecard rv">NO DELAYS. <b>NO BLIND SPOTS.</b> NO SURPRISES.</p>
+      </section>
+
       {/* Services */}
-      <section id="services" className="services">
-        <div className="wrap">
-          <p className="eyebrow rv">Engagement models</p>
-          <h2 className="svc-head rv rv2">Three ways to run your operation. One standard of control.</h2>
-          <div className="svc-grid rv rv3">
+      <section id="services" className={`services${storyOk ? ' services-video' : ''}`}>
+        {storyOk && (
+          <div className="story-bg" aria-hidden="true">
+            <video
+              data-ambient
+              src="/story-takes/story-b.mp4"
+              muted loop playsInline preload="metadata"
+              onError={() => setStoryOk(false)}
+            />
+            <div className="story-scrim"></div>
+          </div>
+        )}
+        <div className="wrap svc-layout">
+          <div className="svc-aside rv">
+            <p className="eyebrow">Engagement models</p>
+            <h2 className="svc-head">Three ways to run your operation. One standard of control.</h2>
+          </div>
+          <div className="svc-grid rv rv2">
             <article className="svc">
               <span className="svc-tag"><i className="dot"></i>FULLY MANAGED</span>
               <h3>The Full Management Ecosystem</h3>
@@ -436,86 +472,6 @@ export default function Home() {
             </article>
           </div>
         </div>
-      </section>
-
-      {/* Focus Portal — scroll-scrubbed tour */}
-      <section id="focus" className="focus grain">
-        <div ref={scrubRef} className="scrub">
-          <div className="stage">
-            <div className="wrap stage-grid">
-              <div>
-                <p className="eyebrow">Focus Portal — guided tour</p>
-                <div className="beats">
-                  <div className="rail"><i ref={railFillRef}></i></div>
-                  <div className="beat">
-                    <em>01</em>
-                    <h3>Where your resources are</h3>
-                    <p>Every agent, every campaign, every shift — one roster, always current.</p>
-                  </div>
-                  <div className="beat">
-                    <em>02</em>
-                    <h3>How your team is performing</h3>
-                    <p>Live KPIs instead of end-of-month reports. Watch quality as it happens.</p>
-                  </div>
-                  <div className="beat">
-                    <em>03</em>
-                    <h3>How performance impacts revenue</h3>
-                    <p>Connect agent output directly to revenue, CLV, and churn reduction.</p>
-                  </div>
-                </div>
-              </div>
-              <div className="dash" role="img" aria-label="Focus Portal dashboard illustration">
-                <div className="dash-top">
-                  FOCUS PORTAL
-                  <span className="live"><i className="dot"></i>LIVE</span>
-                  <span className="tour">TOUR <span ref={tourPctRef}>000</span>%</span>
-                </div>
-                <div className="dash-body">
-                  <div className="panel">
-                    <div className="rowline"><b>M. Herrera</b><span className="camp">INBOUND — RETAIL</span><span className="chip oncall"><i className="dot"></i>ON CALL</span></div>
-                    <div className="rowline"><b>K. Osuna</b><span className="camp">SUPPORT — SAAS</span><span className="chip oncall"><i className="dot"></i>ON CALL</span></div>
-                    <div className="rowline"><b>D. Fuentes</b><span className="camp">BILLING — HEALTH</span><span className="chip idle"><i className="dot"></i>AFTER-CALL</span></div>
-                    <div className="rowline"><b>A. Reyes</b><span className="camp">INBOUND — RETAIL</span><span className="chip oncall"><i className="dot"></i>ON CALL</span></div>
-                    <div className="rowline"><b>S. Camacho</b><span className="camp">RETENTION — TELCO</span><span className="chip idle"><i className="dot"></i>AFTER-CALL</span></div>
-                  </div>
-                  <div className="panel">
-                    <div className="kpis">
-                      <div className="kpi"><span>OCCUPANCY</span><b><span data-kpi="87">0</span>%</b></div>
-                      <div className="kpi"><span>CSAT</span><b><span data-kpi="48" data-div="10">0.0</span>/5</b></div>
-                      <div className="kpi"><span>ADHERENCE</span><b><span data-kpi="96">0</span>%</b></div>
-                      <div className="kpi">
-                        <span>WEEKLY VOLUME</span>
-                        <div className="bars">
-                          <i style={{ height: '42%' }}></i><i style={{ height: '58%' }}></i><i style={{ height: '47%' }}></i>
-                          <i style={{ height: '70%' }}></i><i style={{ height: '64%' }}></i><i style={{ height: '88%' }}></i>
-                          <i style={{ height: '76%' }}></i>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="panel">
-                    <div className="impact">
-                      <div className="impact-top"><span>REVENUE IMPACT — QTD</span><span className="delta">▲ +12.4%</span></div>
-                      <svg viewBox="0 0 400 160" preserveAspectRatio="none" aria-hidden="true">
-                        <polyline
-                          ref={revlineRef}
-                          points="0,140 50,132 100,138 150,112 200,104 250,84 300,88 350,52 400,34"
-                          fill="none" stroke="#4CAF50" strokeWidth="2.5" pathLength={1}
-                        />
-                        <polyline
-                          points="0,140 50,132 100,138 150,112 200,104 250,84 300,88 350,52 400,34 400,160 0,160"
-                          fill="rgba(76,175,80,.09)" stroke="none"
-                        />
-                      </svg>
-                      <span className="note">ILLUSTRATIVE DATA</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <p className="titlecard rv">NO DELAYS. <b>NO BLIND SPOTS.</b> NO SURPRISES.</p>
       </section>
 
       {/* Team */}

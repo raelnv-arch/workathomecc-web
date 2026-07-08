@@ -3,6 +3,7 @@
 import Script from 'next/script';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
+import SocialLinks from '../SocialLinks';
 
 const PERKS = [
   { n: '01', title: 'Stability & legacy', body: 'Join a company with over a decade of proven stability in the BPO industry.' },
@@ -50,8 +51,8 @@ export default function OpportunitiesPage() {
       {/* Navigation */}
       <nav ref={navRef} className="nav" aria-label="Main">
         <div className="wrap nav-in">
-          <a className="nav-logo" href="/" aria-label="Work at Home Solutions — home">
-            <img src="/logo.png" alt="Work@Home Solutions" />
+          <a className="nav-logo" href="/" aria-label="Work at Home Call Center — home">
+            <img src="/logo.png" alt="Work@Home Call Center" />
           </a>
           <div className="nav-links">
             <a href="/#about">About</a>
@@ -179,8 +180,8 @@ export default function OpportunitiesPage() {
       <footer className="footer">
         <div className="wrap">
           <div className="foot-grid">
-            <a className="foot-logo" href="/" aria-label="Work@Home Solutions — home">
-              <img src="/logo.png" alt="Work@Home Solutions" />
+            <a className="foot-logo" href="/" aria-label="Work@Home Call Center — home">
+              <img src="/logo-mist.png" alt="Work@Home Call Center" />
             </a>
             <div className="foot-col">
               175 SW 7th Street, Suite 1517-336<br />Miami, FL 33130
@@ -190,9 +191,10 @@ export default function OpportunitiesPage() {
               <a href="/#focus">Focus Portal</a>
               <a href="/opportunities">Careers</a>
             </div>
+            <SocialLinks />
           </div>
           <div className="foot-base">
-            <span>© 2026 WORK@HOME SOLUTIONS</span>
+            <span>© 2026 WORK@HOME CALL CENTER</span>
             <span>OPERATIONAL EXCELLENCE, DELIVERED REMOTELY</span>
           </div>
         </div>

@@ -447,6 +447,10 @@ html { scroll-behavior: smooth; }
 }
 .member:hover img { filter: none; transform: scale(1.03); }
 .member:hover figure::after { opacity: 0; }
+/* Aldo's headshot (team-1.jpg) is framed further back — zoom in so his face
+   matches the scale of the others. Tune with --face-zoom. */
+.member.zoom-face img { transform: scale(var(--face-zoom, 1.2)); transform-origin: 50% 18%; }
+.member.zoom-face:hover img { transform: scale(calc(var(--face-zoom, 1.2) * 1.03)); }
 .member h3 { font-family: var(--disp); font-weight: 800; font-size: 20px; margin: 20px 0 4px; }
 .member .role {
   font-family: var(--mono); font-size: 10.5px; font-weight: 500; letter-spacing: .18em;
@@ -496,11 +500,15 @@ html { scroll-behavior: smooth; }
 /* ---------- Footer ---------- */
 .footer { background: var(--night); border-top: 1px solid var(--hair-d); padding: 54px 0 40px; }
 .foot-grid { display: flex; justify-content: space-between; gap: 40px; flex-wrap: wrap; align-items: flex-start; }
-.foot-logo img { height: 38px; width: auto; filter: brightness(0) invert(1); opacity: .9; }
+.foot-logo img { height: 38px; width: auto; }
 .foot-col { font-size: 13.5px; color: var(--mist); line-height: 1.8; }
 .foot-col a { transition: color .25s; }
 .foot-col a:hover { color: var(--paper); }
 .foot-links { display: flex; gap: 26px; font-family: var(--mono); font-size: 11px; letter-spacing: .16em; }
+.foot-social { display: flex; align-items: center; gap: 18px; }
+.foot-social a { display: inline-flex; color: var(--mist); transition: color .25s var(--ease), transform .25s var(--ease); }
+.foot-social a:hover { color: var(--paper); transform: translateY(-2px); }
+.foot-social svg { width: 18px; height: 18px; fill: currentColor; display: block; }
 .foot-base {
   margin-top: 44px; padding-top: 22px; border-top: 1px solid var(--hair-d);
   display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;

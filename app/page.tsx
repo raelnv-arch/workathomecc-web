@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
+import SocialLinks from './SocialLinks';
 
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -250,9 +251,9 @@ export default function Home() {
       {/* Navigation */}
       <nav ref={navRef} className="nav" aria-label="Main">
         <div className="wrap nav-in">
-          <a className="nav-logo" href="#top" aria-label="Work at Home Solutions — home"
+          <a className="nav-logo" href="#top" aria-label="Work at Home Call Center — home"
             onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
-            <img src="/logo.png" alt="Work@Home Solutions" />
+            <img src="/logo.png" alt="Work@Home Call Center" />
           </a>
           <div className="nav-links">
             <a href="#about">About</a>
@@ -310,7 +311,6 @@ export default function Home() {
         </div>
         <div className="hero-scrim"></div>
         <div ref={heroInnerRef} className="wrap hero-inner">
-          <span className="live-chip fade-late"><i className="dot"></i>FOCUS PORTAL — LIVE OVERSIGHT</span>
           <h1 className="hero-h1">
             <span className="ln"><span>Operational</span></span>
             <span className="ln"><span>excellence,</span></span>
@@ -405,7 +405,7 @@ export default function Home() {
                   src="https://player.vimeo.com/video/1170844556?h=sv&title=0&byline=0&portrait=0&autoplay=1"
                   allow="autoplay; fullscreen; picture-in-picture"
                   allowFullScreen
-                  title="Work@Home Solutions overview"
+                  title="Work@Home Call Center overview"
                 ></iframe>
               ) : (
                 <button className="reel-cover" onClick={() => setReelPlaying(true)} aria-label="Play the company overview video, 2 minutes">
@@ -492,7 +492,7 @@ export default function Home() {
               <span className="role">Administrative Operations Manager</span>
               <p>Human relations, staff profiling, and performance and quality oversight.</p>
             </div>
-            <div className="member rv rv3">
+            <div className="member rv rv3 zoom-face">
               <figure><Image src="/team-1.jpg" alt="Aldo Perez" fill sizes="(max-width: 920px) 100vw, 33vw" /></figure>
               <h3>Aldo Perez</h3>
               <span className="role">Partner, CFO &amp; AI Tech Developer</span>
@@ -516,7 +516,7 @@ export default function Home() {
               </p>
               <div className="contacts rv rv4">
                 <a className="contact-chip"
-                  href="https://api.whatsapp.com/send/?phone=526634631001&text=Welcome+to+Work%40Home+Solutions%2C&type=phone_number&app_absent=0"
+                  href="https://api.whatsapp.com/send/?phone=526634361001&text=Welcome+to+Work%40Home+Call+Center%2C&type=phone_number&app_absent=0"
                   target="_blank" rel="noopener noreferrer">
                   <span>WhatsApp</span><b>+52 663 436 1001</b>
                 </a>
@@ -568,19 +568,18 @@ export default function Home() {
           <div className="foot-grid">
             <a className="foot-logo" href="#top" aria-label="Back to top"
               onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
-              <img src="/logo.png" alt="Work@Home Solutions" />
+              <img src="/logo-mist.png" alt="Work@Home Call Center" />
             </a>
             <div className="foot-col">
               175 SW 7th Street, Suite 1517-336<br />Miami, FL 33130
             </div>
             <div className="foot-links foot-col">
-              <a href="https://www.linkedin.com/company/wahcc/" target="_blank" rel="noopener noreferrer">LINKEDIN</a>
-              <a href="https://www.facebook.com/workathomecc" target="_blank" rel="noopener noreferrer">FACEBOOK</a>
               <a href="/opportunities">CAREERS</a>
             </div>
+            <SocialLinks />
           </div>
           <div className="foot-base">
-            <span>© 2026 WORK@HOME SOLUTIONS</span>
+            <span>© 2026 WORK@HOME CALL CENTER</span>
             <span>OPERATIONAL EXCELLENCE, DELIVERED REMOTELY</span>
           </div>
         </div>

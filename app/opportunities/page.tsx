@@ -69,7 +69,7 @@ export default function OpportunitiesPage() {
             <a href="/#focus">Focus</a>
             <a href="/#services">Services</a>
             <a href="/#team">Team</a>
-            <a href="/opportunities">Opportunities</a>
+            <a href="/opportunities" className="active" aria-current="page">Opportunities</a>
             <a href="/#contact" className="btn btn-signal">Partner With Us</a>
           </div>
           <button className="nav-burger" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle menu" aria-expanded={menuOpen}>
@@ -94,7 +94,7 @@ export default function OpportunitiesPage() {
                 <a href="/#focus" onClick={closeMenu}>Focus</a>
                 <a href="/#services" onClick={closeMenu}>Services</a>
                 <a href="/#team" onClick={closeMenu}>Team</a>
-                <a href="/opportunities" onClick={closeMenu}>Opportunities</a>
+                <a href="/opportunities" className="active" aria-current="page" onClick={closeMenu}>Opportunities</a>
                 <a href="/#contact" onClick={closeMenu} className="btn btn-signal">Partner With Us</a>
               </div>
             </motion.div>

@@ -6,12 +6,12 @@ const body = Hanken_Grotesk({ subsets: ['latin'], variable: '--font-body' });
 const mono = IBM_Plex_Mono({ subsets: ['latin'], weight: ['400', '500'], variable: '--font-mono' });
 
 export const metadata = {
-    metadataBase: new URL('https://workathomecc.com'),
+    metadataBase: new URL('https://www.workathomecc.com'),
     title: 'Work@Home Call Center',
     description: 'Empower Your Business. Elevate Your Performance.',
     openGraph: {
         type: 'website',
-        url: 'https://workathomecc.com',
+        url: 'https://www.workathomecc.com',
         siteName: 'Work@Home Call Center',
         title: 'Work@Home Call Center',
         description: 'Operational excellence, delivered remotely. Top-tier remote talent, hosted infrastructure, and executive-level transparency.',
@@ -34,8 +34,8 @@ const orgSchema = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: 'Work@Home Call Center',
-    url: 'https://workathomecc.com',
-    logo: 'https://workathomecc.com/logo.png',
+    url: 'https://www.workathomecc.com',
+    logo: 'https://www.workathomecc.com/logo.png',
     description:
         'Managed remote call-center operations — top-tier bilingual talent, hosted infrastructure, and executive-level transparency.',
     email: 'info@workathomecc.com',

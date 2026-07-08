@@ -7,7 +7,7 @@ export const metadata = {
         title: 'Careers — Work@Home Call Center',
         description:
             'Bilingual, work-from-home call-center roles with base pay plus commission. Start your pre-interview application.',
-        url: 'https://workathomecc.com/opportunities',
+        url: 'https://www.workathomecc.com/opportunities',
     },
     twitter: {
         title: 'Careers — Work@Home Call Center',

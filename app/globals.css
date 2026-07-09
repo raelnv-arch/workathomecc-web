@@ -547,12 +547,12 @@ html { scroll-behavior: smooth; }
 .perk h3 { font-family: var(--disp); font-weight: 800; font-size: 20px; letter-spacing: -.01em; margin-bottom: 10px; }
 .perk p { font-size: 14.5px; color: var(--mist-ink); max-width: 42ch; }
 
-.opps-apply { background: var(--paper); color: var(--ink); padding: clamp(90px, 11vw, 150px) 0; border-top: 1px solid var(--hair-l); }
-.opps-apply .eyebrow { color: var(--mist-ink); margin-bottom: 30px; }
+.opps-apply { background: var(--night); color: var(--paper); padding: clamp(90px, 11vw, 150px) 0; border-top: 1px solid var(--hair-d); }
+.opps-apply .eyebrow { color: var(--mist); margin-bottom: 30px; }
 .opps-apply-head { max-width: 780px; margin-bottom: clamp(40px, 5vw, 64px); }
 .opps-apply-head h2 { font-family: var(--disp); font-weight: 900; font-size: clamp(28px, 3.2vw, 44px); line-height: 1.08; letter-spacing: -.02em; text-wrap: balance; margin-bottom: 20px; }
-.opps-apply-head p { color: #33415C; font-size: 16px; max-width: 64ch; margin-bottom: 14px; }
-.opps-apply-head strong { color: var(--ink); font-weight: 700; }
+.opps-apply-head p { color: var(--mist); font-size: 16px; max-width: 64ch; margin-bottom: 14px; }
+.opps-apply-head strong { color: var(--paper); font-weight: 700; }
 .form-embed { background: var(--navy); border-radius: 16px; overflow: hidden; position: relative; padding: 16px; box-shadow: 0 40px 90px -45px rgba(6, 13, 28, .55); }
 .form-embed iframe { display: block; width: 100%; border: 0; border-radius: 8px; background: #fff; }
 

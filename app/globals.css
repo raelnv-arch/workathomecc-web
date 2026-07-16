@@ -499,6 +499,14 @@ html { scroll-behavior: smooth; }
 
 /* Careers application form — native fields + Web3Forms delivery */
 .apply-card { max-width: 760px; margin: 0 auto; }
+
+/* Standalone application route for trusted third-party iframe embeds. */
+.embed-application {
+  min-height: 100vh;
+  padding: clamp(12px, 3vw, 32px);
+}
+.embed-application .apply-card,
+.embed-application .apply-done { max-width: 760px; }
 .field select {
   background: var(--night); border: 1px solid var(--hair-d); border-radius: 5px;
   color: var(--paper); font-family: var(--body); font-size: 14.5px; padding: 12px 40px 12px 14px;

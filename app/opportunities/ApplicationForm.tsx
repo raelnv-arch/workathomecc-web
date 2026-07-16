@@ -344,11 +344,6 @@ export default function ApplicationForm() {
 
       <YesNo name="Comfortable working remotely" label="Are you comfortable working remotely?" />
 
-      <YesNo
-        name="Speaks fluent conversational English (90% minimum)"
-        label="Do you speak fluent conversational English (90% minimum)?"
-        note="This is a requirement for all campaigns."
-      />
 
       <div className="q">
         <label className="q-label" htmlFor="a-hours">

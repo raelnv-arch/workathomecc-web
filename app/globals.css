@@ -486,13 +486,13 @@ html { scroll-behavior: smooth; }
 .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .field { display: flex; flex-direction: column; gap: 7px; margin-bottom: 14px; }
 .field label { font-family: var(--mono); font-size: 9.5px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; color: var(--mist); }
-.field input, .field textarea {
+.field input, .field textarea, .q input[type="text"] {
   background: var(--night); border: 1px solid var(--hair-d); border-radius: 5px;
   color: var(--paper); font-family: var(--body); font-size: 14.5px; padding: 12px 14px;
   transition: border-color .25s; width: 100%;
 }
-.field input:focus, .field textarea:focus { outline: none; border-color: rgba(76, 175, 80, .6); }
-.field input::placeholder, .field textarea::placeholder { color: rgba(143, 161, 191, .45); }
+.field input:focus, .field textarea:focus, .q input[type="text"]:focus { outline: none; border-color: rgba(76, 175, 80, .6); }
+.field input::placeholder, .field textarea::placeholder, .q input[type="text"]::placeholder { color: rgba(143, 161, 191, .45); }
 .field textarea { resize: none; }
 .form-card .btn { width: 100%; justify-content: center; margin-top: 6px; }
 .form-note { font-family: var(--mono); font-size: 9.5px; letter-spacing: .14em; color: var(--mist); opacity: .6; text-align: center; margin-top: 14px; text-transform: uppercase; }
@@ -527,6 +527,114 @@ html { scroll-behavior: smooth; }
 .apply-done h3 { font-family: var(--disp); font-weight: 800; font-size: 24px; margin-bottom: 12px; }
 .apply-done p { color: var(--mist); font-size: 15px; line-height: 1.65; margin-bottom: 24px; }
 .apply-done .btn-ghost { width: auto; display: inline-flex; }
+
+/* ── Long-form application: sections, questions, uploads ───────── */
+.sec-head {
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--mono); font-size: 10px; font-weight: 500; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--paper);
+  margin: 38px 0 20px; padding-bottom: 12px; border-bottom: 1px solid var(--hair-d);
+}
+.sec-head:first-of-type { margin-top: 4px; }
+.sec-head i { font-style: normal; color: var(--signal); }
+
+/* Question labels are full sentences, so they use the body font at a
+   readable size — not the tiny uppercase mono used for short field names. */
+.q { border: 0; padding: 0; margin: 0 0 18px; }
+.q-label {
+  display: block; padding: 0;
+  font-family: var(--body); font-size: 14.5px; font-weight: 600; line-height: 1.45;
+  color: var(--paper); margin-bottom: 8px; text-transform: none; letter-spacing: 0;
+}
+.q-label .req { color: var(--signal); margin-left: 2px; }
+.q-note { font-size: 13px; line-height: 1.5; color: var(--mist); margin: -2px 0 10px; }
+.q-note a, .q-intro a { color: var(--signal); }
+.q-intro { font-size: 14.5px; line-height: 1.6; color: var(--mist); margin-bottom: 20px; }
+.q-err { font-size: 13px; color: #ffb4b4; margin-top: 8px; }
+.opt-tag { color: var(--mist); opacity: .7; font-weight: 400; }
+
+.q-opts { display: flex; flex-wrap: wrap; gap: 8px; }
+.opt {
+  display: inline-flex; align-items: center; gap: 9px; cursor: pointer;
+  padding: 10px 16px; border: 1px solid var(--hair-d); border-radius: 6px;
+  background: var(--night); transition: border-color .2s, background .2s;
+  font-size: 14px; color: var(--paper); min-width: 96px;
+}
+.opt:hover { border-color: rgba(243, 245, 250, .28); }
+.opt input { accent-color: var(--signal); width: 15px; height: 15px; margin: 0; cursor: pointer; flex: none; }
+.opt:has(input:checked) { border-color: rgba(76, 175, 80, .6); background: rgba(76, 175, 80, .08); }
+
+/* File upload */
+.drop {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+  padding: 26px 18px; text-align: center; cursor: pointer;
+  border: 1px dashed var(--hair-d); border-radius: 8px; background: var(--night);
+  transition: border-color .2s, background .2s;
+}
+.drop:hover { border-color: rgba(76, 175, 80, .5); background: rgba(76, 175, 80, .04); }
+.drop.has-file { border-style: solid; border-color: rgba(76, 175, 80, .6); background: rgba(76, 175, 80, .07); }
+.drop-input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.drop svg { width: 22px; height: 22px; color: var(--mist); margin-bottom: 4px; }
+.drop.has-file svg { color: var(--signal); }
+.drop b { font-size: 14px; font-weight: 600; color: var(--paper); word-break: break-all; }
+.drop em {
+  font-family: var(--mono); font-style: normal; font-size: 9.5px; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--mist); opacity: .7;
+}
+
+/* Collapsible "how do I…" helpers */
+.how { margin: -8px 0 18px; border-left: 1px solid var(--hair-d); padding-left: 14px; }
+.how summary {
+  cursor: pointer; font-size: 13px; color: var(--mist);
+  text-decoration: underline; text-underline-offset: 3px; list-style: none;
+}
+.how summary::-webkit-details-marker { display: none; }
+.how summary::before { content: '?'; display: inline-grid; place-items: center; width: 15px; height: 15px; margin-right: 7px; border: 1px solid currentColor; border-radius: 50%; font-size: 9px; }
+.how summary:hover { color: var(--paper); }
+.how ol { margin: 12px 0 0 16px; padding: 0; }
+.how li { font-size: 13.5px; line-height: 1.6; color: var(--mist); margin-bottom: 5px; }
+.how li b { color: var(--paper); font-weight: 600; }
+.how a { color: var(--signal); }
+.how img { display: block; width: 100%; max-width: 420px; margin-top: 12px; border: 1px solid var(--hair-d); border-radius: 6px; }
+
+/* Minimum system requirements — rebuilt in HTML (was a flat image) */
+.reqs { border: 1px solid var(--hair-d); border-radius: 10px; overflow: hidden; margin-bottom: 24px; }
+.reqs-h {
+  font-family: var(--mono); font-size: 10px; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--paper); padding: 14px 18px; background: var(--night); border-bottom: 1px solid var(--hair-d); margin: 0;
+}
+.reqs dl { margin: 0; }
+.reqs-row { display: grid; grid-template-columns: 150px 1fr; gap: 16px; padding: 14px 18px; border-bottom: 1px solid var(--hair-d); }
+.reqs-row:last-child { border-bottom: 0; }
+.reqs dt { font-family: var(--mono); font-size: 9.5px; letter-spacing: .16em; text-transform: uppercase; color: var(--mist); padding-top: 3px; }
+.reqs dd { margin: 0; }
+.reqs dd p { font-size: 13.5px; line-height: 1.55; color: var(--mist); margin: 0 0 5px; }
+.reqs dd p:last-child { margin-bottom: 0; }
+.reqs dd b { color: var(--paper); font-weight: 600; }
+
+/* Success panel — next steps */
+.done-next { border-top: 1px solid var(--hair-d); margin-top: 4px; padding-top: 26px; }
+.done-next-h { font-family: var(--body); font-weight: 700; color: var(--paper); font-size: 15px; margin-bottom: 8px; }
+.done-cta { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 18px; }
+.done-cta .btn { width: auto; }
+
+/* The QR is desktop-only: a phone cannot scan a code on its own screen,
+   so mobile users get the tappable wa.me button instead. */
+.qr-block { display: none; }
+
+@media (max-width: 640px) {
+  .reqs-row { grid-template-columns: 1fr; gap: 6px; }
+  .opt { flex: 1 1 auto; justify-content: center; }
+}
+
+@media (min-width: 700px) {
+  .qr-block { display: block; margin-top: 26px; }
+  .qr-block img { display: block; width: 132px; height: 132px; margin: 0 auto 10px; background: #fff; padding: 8px; border-radius: 8px; }
+  .qr-block p {
+    font-family: var(--mono); font-size: 9.5px; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--mist); opacity: .7; margin: 0;
+  }
+}
 
 /* ---------- Footer ---------- */
 .footer { background: var(--night); border-top: 1px solid var(--hair-d); padding: 54px 0 40px; }

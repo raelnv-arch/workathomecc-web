@@ -1,6 +1,5 @@
 "use client";
 
-import Script from 'next/script';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import SocialLinks from '../SocialLinks';
@@ -12,11 +11,50 @@ const PERKS = [
   { n: '04', title: 'Advanced technology', body: 'The W@H Focus Portal gives you real-time coaching, reporting, and daily performance tracking — the tools to succeed.' },
 ];
 
+/* ─────────────────────────────────────────────────────────────
+   APPLICATION DELIVERY — Web3Forms (free, unlimited form→email)
+   Applications are emailed to whichever inbox you use to create
+   the key. Get one in ~30 seconds at https://web3forms.com
+   (enter your email → the access key is shown/emailed instantly),
+   then paste it below. Add extra recipients (CC) anytime from the
+   Web3Forms dashboard. The key is meant to live in the page — it
+   is not a secret and only lets the form send to your inbox.
+   ───────────────────────────────────────────────────────────── */
+const WEB3FORMS_ACCESS_KEY = '8933a1f2-fa63-4c4c-aef4-2b75233a478f';
+
+const ENGLISH_LEVELS = ['Basic', 'Intermediate', 'Advanced', 'Native / Bilingual'];
+const EXPERIENCE = ['No experience yet', 'Less than 1 year', '1–2 years', '3–5 years', '5+ years'];
+const AVAILABILITY = ['Full-time', 'Part-time', 'Either'];
+
 export default function OpportunitiesPage() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
 
   const rootRef = useRef<HTMLElement>(null);
   const navRef = useRef<HTMLElement>(null);
+
+  async function handleApply(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const form = e.currentTarget;
+    setStatus('submitting');
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: new FormData(form),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setStatus('success');
+        form.reset();
+        window.scrollTo({ top: (document.getElementById('apply')?.offsetTop ?? 0) - 80, behavior: 'smooth' });
+      } else {
+        setStatus('error');
+      }
+    } catch {
+      setStatus('error');
+    }
+  }
 
   useEffect(() => {
     const root = rootRef.current;
@@ -174,15 +212,130 @@ export default function OpportunitiesPage() {
               to reviewing your submission.
             </p>
           </div>
-          <div className="form-embed rv rv2">
-            <iframe
-              id="JotFormIFrame-240454796213054"
-              title="Work@Home Pre-Interview Application"
-              allow="geolocation; microphone; camera"
-              src="https://form.jotform.com/Workathomecc/workhome-pre-interview-application"
-              style={{ minWidth: '100%', maxWidth: '100%', height: '1100px', border: 'none' }}
-              scrolling="no"
-            ></iframe>
+          <div className="rv rv2">
+            {status === 'success' ? (
+              <div className="apply-done" role="status" aria-live="polite">
+                <div className="apply-done-mark" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M20 6L9 17l-5-5" />
+                  </svg>
+                </div>
+                <h3>Application received.</h3>
+                <p>
+                  Thank you for applying to Work@Home Call Center. Our recruiting team reviews every
+                  submission — if your background aligns with an active campaign, we&apos;ll reach out by
+                  email or WhatsApp.
+                </p>
+                <button type="button" className="btn btn-ghost" onClick={() => setStatus('idle')}>
+                  Submit another application
+                </button>
+              </div>
+            ) : (
+              <form className="form-card apply-card" onSubmit={handleApply}>
+                {/* Web3Forms delivery fields + honeypot (kept out of view) */}
+                <input type="hidden" name="access_key" value={WEB3FORMS_ACCESS_KEY} />
+                <input type="hidden" name="subject" value="New Pre-Interview Application — Work@Home Call Center" />
+                <input type="hidden" name="from_name" value="Work@Home Careers Site" />
+                <input type="checkbox" name="botcheck" tabIndex={-1} autoComplete="off" aria-hidden="true" style={{ display: 'none' }} />
+
+                <div className="form-grid">
+                  <div className="field">
+                    <label htmlFor="a-first">First name</label>
+                    <input id="a-first" type="text" name="First name" required placeholder="Maria" />
+                  </div>
+                  <div className="field">
+                    <label htmlFor="a-last">Last name</label>
+                    <input id="a-last" type="text" name="Last name" required placeholder="González" />
+                  </div>
+                </div>
+
+                <div className="form-grid">
+                  <div className="field">
+                    <label htmlFor="a-email">Email</label>
+                    <input id="a-email" type="email" name="email" required placeholder="maria@email.com" />
+                  </div>
+                  <div className="field">
+                    <label htmlFor="a-phone">Phone / WhatsApp</label>
+                    <input id="a-phone" type="tel" name="Phone / WhatsApp" required placeholder="+52 …" />
+                  </div>
+                </div>
+
+                <div className="form-grid">
+                  <div className="field">
+                    <label htmlFor="a-city">City</label>
+                    <input id="a-city" type="text" name="City" required placeholder="Tijuana" />
+                  </div>
+                  <div className="field">
+                    <label htmlFor="a-state">State</label>
+                    <input id="a-state" type="text" name="State" required placeholder="Baja California" />
+                  </div>
+                </div>
+
+                <div className="form-grid">
+                  <div className="field">
+                    <label htmlFor="a-english">English proficiency</label>
+                    <select id="a-english" name="English proficiency" required defaultValue="">
+                      <option value="" disabled>Select…</option>
+                      {ENGLISH_LEVELS.map((o) => <option key={o} value={o}>{o}</option>)}
+                    </select>
+                  </div>
+                  <div className="field">
+                    <label htmlFor="a-exp">Call-center experience</label>
+                    <select id="a-exp" name="Call-center experience" required defaultValue="">
+                      <option value="" disabled>Select…</option>
+                      {EXPERIENCE.map((o) => <option key={o} value={o}>{o}</option>)}
+                    </select>
+                  </div>
+                </div>
+
+                <div className="form-grid">
+                  <div className="field">
+                    <label htmlFor="a-setup">Home office ready?</label>
+                    <select id="a-setup" name="Home office (computer, internet, headset)" required defaultValue="">
+                      <option value="" disabled>Select…</option>
+                      <option value="Yes — computer, internet & headset ready">Yes — fully ready</option>
+                      <option value="Partially — still setting up">Partially — still setting up</option>
+                      <option value="Not yet">Not yet</option>
+                    </select>
+                  </div>
+                  <div className="field">
+                    <label htmlFor="a-avail">Availability</label>
+                    <select id="a-avail" name="Availability" required defaultValue="">
+                      <option value="" disabled>Select…</option>
+                      {AVAILABILITY.map((o) => <option key={o} value={o}>{o}</option>)}
+                    </select>
+                  </div>
+                </div>
+
+                <div className="field">
+                  <label htmlFor="a-link">LinkedIn or résumé link <span className="opt">— optional</span></label>
+                  <input id="a-link" type="url" name="LinkedIn / résumé link" placeholder="https://linkedin.com/in/…" />
+                </div>
+
+                <div className="field">
+                  <label htmlFor="a-why">Why do you want to join Work@Home?</label>
+                  <textarea id="a-why" name="Why they want to join" required rows={4} placeholder="Tell us a little about your experience and what you're looking for…"></textarea>
+                </div>
+
+                <div className="field">
+                  <label htmlFor="a-hear">How did you hear about us? <span className="opt">— optional</span></label>
+                  <input id="a-hear" type="text" name="How did you hear about us" placeholder="Facebook, a friend, Indeed…" />
+                </div>
+
+                <button type="submit" className="btn btn-signal" disabled={status === 'submitting'}>
+                  {status === 'submitting' ? 'Sending…' : 'Submit application'}
+                </button>
+
+                {status === 'error' && (
+                  <p className="apply-error" role="alert">
+                    Something went wrong sending your application. Please try again, or email us at{' '}
+                    <a href="mailto:info@workathomecc.com">info@workathomecc.com</a>.
+                  </p>
+                )}
+
+                <p className="form-note">Your information is kept private and used only for recruiting.</p>
+              </form>
+            )}
           </div>
         </div>
       </section>
@@ -210,17 +363,6 @@ export default function OpportunitiesPage() {
           </div>
         </div>
       </footer>
-
-      <Script
-        src="https://cdn.jotfor.ms/s/umd/latest/for-form-embed-handler.js"
-        strategy="afterInteractive"
-        onLoad={() => {
-          const w = window as unknown as { jotformEmbedHandler?: (a: string, b: string) => void };
-          if (w.jotformEmbedHandler) {
-            w.jotformEmbedHandler("iframe[id='JotFormIFrame-240454796213054']", 'https://form.jotform.com/');
-          }
-        }}
-      />
     </main>
   );
 }

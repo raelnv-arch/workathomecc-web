@@ -497,6 +497,37 @@ html { scroll-behavior: smooth; }
 .form-card .btn { width: 100%; justify-content: center; margin-top: 6px; }
 .form-note { font-family: var(--mono); font-size: 9.5px; letter-spacing: .14em; color: var(--mist); opacity: .6; text-align: center; margin-top: 14px; text-transform: uppercase; }
 
+/* Careers application form — native fields + Web3Forms delivery */
+.apply-card { max-width: 760px; margin: 0 auto; }
+.field select {
+  background: var(--night); border: 1px solid var(--hair-d); border-radius: 5px;
+  color: var(--paper); font-family: var(--body); font-size: 14.5px; padding: 12px 40px 12px 14px;
+  transition: border-color .25s; width: 100%; cursor: pointer;
+  -webkit-appearance: none; -moz-appearance: none; appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238FA1BF' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 14px center; background-size: 12px;
+}
+.field select:focus { outline: none; border-color: rgba(76, 175, 80, .6); }
+.field select:invalid { color: rgba(143, 161, 191, .55); }
+.field select option { color: var(--paper); background: var(--night-2); }
+.field .opt { color: var(--mist); opacity: .7; font-weight: 400; }
+.form-card .btn:disabled { opacity: .55; cursor: progress; transform: none; filter: none; }
+.apply-error { font-family: var(--body); font-size: 13.5px; line-height: 1.5; color: #ffb4b4; text-align: center; margin-top: 14px; }
+.apply-error a { color: #ffb4b4; text-decoration: underline; }
+.apply-done {
+  background: var(--night-2); border: 1px solid var(--hair-d); border-radius: 10px;
+  padding: clamp(34px, 5vw, 60px) clamp(24px, 3vw, 44px);
+  max-width: 620px; margin: 0 auto; text-align: center;
+}
+.apply-done-mark {
+  width: 58px; height: 58px; margin: 0 auto 22px; border-radius: 50%;
+  display: grid; place-items: center; background: rgba(76, 175, 80, .14); color: var(--signal);
+}
+.apply-done-mark svg { width: 27px; height: 27px; }
+.apply-done h3 { font-family: var(--disp); font-weight: 800; font-size: 24px; margin-bottom: 12px; }
+.apply-done p { color: var(--mist); font-size: 15px; line-height: 1.65; margin-bottom: 24px; }
+.apply-done .btn-ghost { width: auto; display: inline-flex; }
+
 /* ---------- Footer ---------- */
 .footer { background: var(--night); border-top: 1px solid var(--hair-d); padding: 54px 0 40px; }
 .foot-grid { display: flex; justify-content: space-between; gap: 40px; flex-wrap: wrap; align-items: flex-start; }

@@ -351,7 +351,7 @@ html { scroll-behavior: smooth; }
 }
 
 /* ---------- Focus Portal scrub ---------- */
-.focus { background: var(--night); padding: clamp(90px, 12vw, 150px) 0; }
+.focus { background: var(--night); padding: clamp(90px, 12vw, 150px) 0 clamp(45px, 6vw, 75px); }
 .focus-grid { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(40px, 6vw, 80px); align-items: center; }
 .focus-video .reel-frame { width: 100%; }
 .scrub { height: 340vh; position: relative; }
@@ -426,7 +426,7 @@ html { scroll-behavior: smooth; }
 .impact .note { font-family: var(--mono); font-size: 9.5px; letter-spacing: .14em; color: var(--mist); opacity: .6; margin-top: 10px; }
 
 .titlecard {
-  text-align: center; padding: clamp(70px, 9vw, 120px) 20px;
+  text-align: center; padding: clamp(70px, 9vw, 120px) 20px clamp(35px, 4.5vw, 60px);
   font-family: var(--mono); font-size: clamp(12px, 1.6vw, 16px); letter-spacing: .34em; color: var(--mist);
 }
 .titlecard b { color: var(--paper); font-weight: 500; }
@@ -649,6 +649,7 @@ html { scroll-behavior: smooth; }
 .foot-grid { display: flex; justify-content: space-between; gap: 40px; flex-wrap: wrap; align-items: flex-start; }
 .foot-logo img { height: 38px; width: auto; }
 .foot-col { font-size: 13.5px; color: var(--mist); line-height: 1.8; }
+.foot-address { font-style: normal; }
 .foot-col a { transition: color .25s; }
 .foot-col a:hover { color: var(--paper); }
 .foot-links { display: flex; gap: 26px; font-family: var(--mono); font-size: 11px; letter-spacing: .16em; }

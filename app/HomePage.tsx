@@ -604,6 +604,7 @@ export default function HomePage() {
               175 SW 7th Street, Suite 1517-336<br />Miami, FL 33130, United States
             </address>
             <div className="foot-links foot-col">
+              <a href="/tijuana-call-center">Tijuana call center &amp; BPO</a>
               <a href="/opportunities">CAREERS</a>
             </div>
             <SocialLinks />

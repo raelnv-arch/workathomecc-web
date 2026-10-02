@@ -609,7 +609,7 @@ export default function HomePage() {
             <SocialLinks />
           </div>
           <div className="foot-base">
-            <span>© 2026 WORKATHOME CALL CENTER</span>
+            <span>© 2026 WORK AT HOME CALL CENTER</span>
             <span>OPERATIONAL EXCELLENCE, DELIVERED REMOTELY</span>
           </div>
         </div>

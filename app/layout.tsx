@@ -1,4 +1,5 @@
 import './globals.css';
+import WebsiteAnalytics from './WebsiteAnalytics';
 import { Archivo, Hanken_Grotesk, IBM_Plex_Mono } from 'next/font/google';
 
 const disp = Archivo({ subsets: ['latin'], variable: '--font-disp' });
@@ -68,6 +69,7 @@ export default function RootLayout({
             <body className="antialiased">
                 <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }} />
                 {children}
+                <WebsiteAnalytics />
             </body>
         </html>
     );

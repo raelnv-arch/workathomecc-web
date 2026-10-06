@@ -755,3 +755,26 @@ html { scroll-behavior: smooth; }
   .kpi .bars i { transform: none !important; }
   .rowline { opacity: 1; transform: none; }
 }
+/* Optional analytics preferences and consultation delivery feedback. */
+.analytics-notice { position: fixed; z-index: 1000; bottom: 18px; left: 18px; right: 18px; max-width: 1040px; margin: auto; padding: 22px 26px; display: flex; align-items: center; gap: 28px; background: var(--navy); color: var(--paper); border: 1px solid var(--hair-d); border-radius: 10px; box-shadow: 0 12px 48px rgba(0,0,0,.4); }
+.analytics-notice strong { font-size: 17px; }
+.analytics-notice p { font-size: 14px; line-height: 1.55; color: var(--mist); margin: 6px 0 0; }
+.analytics-notice a, .form-note a, .consultation-status a { text-decoration: underline; text-underline-offset: 3px; }
+.analytics-actions { display: flex; gap: 10px; flex-shrink: 0; }
+.analytics-actions button { padding: 12px 15px; font: inherit; font-size: 14px; font-weight: 600; color: var(--paper); background: transparent; border: 1px solid var(--hair-d); border-radius: 5px; cursor: pointer; }
+.analytics-actions button:last-child { background: var(--signal); color: var(--night); border-color: var(--signal); }
+.analytics-settings { position: fixed; z-index: 100; bottom: 10px; right: 12px; border: 1px solid var(--hair-d); border-radius: 4px; background: var(--navy); color: var(--paper); font: inherit; font-size: 11px; padding: 6px 10px; cursor: pointer; }
+.analytics-actions button:focus-visible, .analytics-settings:focus-visible { outline: 2px solid var(--paper); outline-offset: 3px; }
+.consultation-status { margin: 18px 0 0; padding: 14px; border: 1px solid var(--signal); color: var(--paper); font-size: 15px; line-height: 1.6; }
+.consultation-error { border-color: #ffb4b4; }
+#consultation-form button:disabled { opacity: .65; cursor: wait; }
+.privacy-page { min-height: 100vh; background: var(--night); color: var(--paper); padding: 60px 0 100px; }
+.privacy-page .wrap { max-width: 860px; }
+.privacy-page h1 { margin: 38px 0 18px; font-size: clamp(32px,5vw,52px); }
+.privacy-page h2 { margin: 34px 0 12px; font-size: 24px; }
+.privacy-page p { color: var(--mist); font-size: 17px; line-height: 1.75; margin: 0 0 16px; }
+.privacy-page a { text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 700px) {
+  .analytics-notice { bottom: 10px; left: 10px; right: 10px; padding: 18px; flex-direction: column; align-items: stretch; gap: 14px; }
+  .analytics-actions button { flex: 1; }
+}

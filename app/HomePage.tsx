@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import SocialLinks from './SocialLinks';
+import ConsultationForm from './ConsultationForm';
 
 export default function HomePage() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -552,36 +553,7 @@ export default function HomePage() {
             </div>
             <div className="form-card rv rv3">
               <h3>Request a consultation</h3>
-              <form action="https://formspree.io/f/meelndov" method="POST">
-                <div className="form-grid">
-                  <div className="field">
-                    <label htmlFor="f-first">First name</label>
-                    <input id="f-first" type="text" name="firstName" required placeholder="John" />
-                  </div>
-                  <div className="field">
-                    <label htmlFor="f-last">Last name</label>
-                    <input id="f-last" type="text" name="lastName" required placeholder="Doe" />
-                  </div>
-                </div>
-                <div className="field">
-                  <label htmlFor="f-email">Work email</label>
-                  <input id="f-email" type="email" name="email" required placeholder="john@company.com" />
-                </div>
-                <div className="field">
-                  <label htmlFor="f-company">Company</label>
-                  <input id="f-company" type="text" name="company" placeholder="Your organization" />
-                </div>
-                <div className="field">
-                  <label htmlFor="f-industry">Industry (optional)</label>
-                  <input id="f-industry" type="text" name="industry" placeholder="Healthcare, tech, retail…" />
-                </div>
-                <div className="field">
-                  <label htmlFor="f-message">How can we help?</label>
-                  <textarea id="f-message" name="message" required rows={3} placeholder="Tell us about your operational needs…"></textarea>
-                </div>
-                <button type="submit" className="btn btn-signal">Send message</button>
-                <p className="form-note">We respect your privacy. No spam, ever.</p>
-              </form>
+              <ConsultationForm />
             </div>
           </div>
         </div>
@@ -606,6 +578,7 @@ export default function HomePage() {
             <div className="foot-links foot-col">
               <a href="/tijuana-call-center">Tijuana call center &amp; BPO</a>
               <a href="/opportunities">CAREERS</a>
+              <a href="/privacy">Privacy notice</a>
             </div>
             <SocialLinks />
           </div>

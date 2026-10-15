@@ -464,6 +464,10 @@ export default function HomePage() {
           <div className="svc-aside rv">
             <p className="eyebrow">Engagement models</p>
             <h2 className="svc-head">Three ways to run your operation. One standard of control.</h2>
+            <p className="svc-intro">Explore the work your team can take on, from lead qualification and warm transfers to customer service and retention.</p>
+            <a className="svc-detail-link" href="/tijuana-call-center">
+              <span>Explore call center &amp; BPO services in Tijuana</span><span aria-hidden="true">↗</span>
+            </a>
           </div>
           <div className="svc-grid rv rv2">
             <article className="svc">

@@ -50,6 +50,9 @@
 .featuredMetric p { color: var(--mist); font-size: 14px; }
 .featured h3 { font-family: var(--disp); font-size: 29px; line-height: 1.15; font-weight: 800; letter-spacing: -.02em; margin-bottom: 20px; }
 .featured div > p { color: var(--mist); font-size: 15px; margin-bottom: 16px; }
+.campaignScope { display: grid; gap: 16px; margin: 22px 0; }
+.campaignScope dt { font-family: var(--mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--paper); margin-bottom: 6px; }
+.campaignScope dd { margin: 0; font-size: 15px; color: var(--mist); }
 .workflow { display: flex; flex-wrap: wrap; gap: 8px; border-top: 1px solid var(--hair-d); padding-top: 18px; font-size: 11px; color: var(--paper); font-family: var(--mono); }
 .workflow > span { color: var(--signal); }
 .campaign { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1.6fr) minmax(100px, .4fr); gap: 36px; align-items: center; padding: 26px 0; border-bottom: 1px solid var(--hair-d); }
@@ -71,6 +74,7 @@
 .operating { background: var(--night-2); border-top: 1px solid var(--hair-d); border-bottom: 1px solid var(--hair-d); }
 .operatingGrid, .faqGrid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 72px; align-items: start; }
 .operating .sectionHead { margin-bottom: 0; }
+.operating .sectionHead > p:not(:first-child) { color: var(--mist); font-size: 17px; margin-top: 20px; }
 .operating .textLink { margin-top: 24px; }
 .steps { list-style: none; }
 .steps li { display: flex; gap: 26px; border-top: 1px solid var(--hair-d); padding: 24px 0; }

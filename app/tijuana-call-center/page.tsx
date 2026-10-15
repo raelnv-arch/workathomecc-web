@@ -15,9 +15,9 @@ export const metadata: Metadata = {
 };
 
 const services = [
-  { title: 'Lead qualification & warm transfers', text: 'Contact prospects, gauge interest, qualify against your criteria, and connect interested customers to your closing team.' },
-  { title: 'Appointment setting & callbacks', text: 'Connect leads to an available specialist or schedule a callback when your team is unavailable.' },
-  { title: 'Customer service & retention', text: 'Handle customer questions, follow up with existing customers, and support retention workflows under your brand.' },
+  { title: 'Lead qualification & warm transfers', text: 'Contact prospects, gauge interest, and qualify against your criteria. Define what makes a qualified handoff and when agents should connect an interested customer to your closing team.' },
+  { title: 'Appointment setting & callbacks', text: 'Connect leads to an available specialist or schedule a callback when your team is unavailable. Agree on the scheduling process and the information your specialist needs for the next conversation.' },
+  { title: 'Customer service & retention', text: 'Handle customer questions, follow up with existing customers, and support retention workflows under your brand. Set the boundaries for what agents can resolve and what should go to your team.' },
   { title: 'Technical support', text: 'Help customers through your support process, document the issue, and route escalations to the right person in your operation.' },
   { title: 'Recruitment interviewing', text: 'Interview applicants against your role requirements and screen for fit, reliability, and suitability.' },
   { title: 'Managed BPO operations', text: 'Bring recruiting, training, quality assurance, employee management, and payroll into one managed team arrangement.' },
@@ -37,7 +37,9 @@ const faqs = [
   { question: 'Are your agents remote, and do we need to visit an office?', answer: 'Our delivery model is remote, with headquarters in Tijuana, Baja California. Many of our agents work from home. Client coordination, training, instructions, and payments are handled online; an office visit is not required to work with us.' },
   { question: 'Can agents work in our systems and under our brand?', answer: 'Yes. We build teams to work in your systems, follow your workflows, and represent your brand. System access, escalation paths, and reporting expectations are agreed during setup.' },
   { question: 'Do you supply leads or close sales?', answer: 'In our three-year personal-loan campaign, the client supplied the leads and loan specialists. Our agents handled initial qualification and warm transfers; the client’s specialists handled closing. We define lead sourcing, qualification criteria, and closing responsibilities for each engagement.' },
-  { question: 'How much does outsourcing cost, and how quickly can we start?', answer: 'Pricing and launch timing depend on the work, team size, schedule, training, and management scope. Share your current workflow and coverage needs so we can prepare a proposal and agree a launch plan.' },
+  { question: 'How do training, quality assurance, and reporting work?', answer: 'Our three-year lending engagement included training and quality assurance alongside employee management and payroll. For your campaign, we agree the training scope, quality criteria, reporting expectations, and escalation contacts during setup. The responsibilities depend on whether you choose a managed team, white label partnership, or talent access.' },
+  { question: 'What should we prepare before discussing a team?', answer: 'Bring an outline of the work, estimated workload, coverage hours and time zone, required languages, and the systems your team uses. For outbound work, explain where leads come from, what qualifies a prospect, and who handles the next step. These details help us define responsibilities and staffing.' },
+  { question: 'How much does outsourcing cost, and how quickly can we start?', answer: 'Pricing and launch timing depend on the work, team size, schedule, training, and management scope. We agree the proposal and launch plan around those requirements. System access, training materials, and a clear handoff process are part of the setup discussion.' },
 ];
 
 const schema = {
@@ -135,7 +137,15 @@ export default function TijuanaCallCenterPage() {
             </div>
             <article className={styles.featured}>
               <div className={styles.featuredMetric}><span className={styles.smallLabel}>Personal loans</span><strong>85<span>seats</span></strong><p>Three-year engagement</p></div>
-              <div><h3>From first conversation<br />to a qualified handoff.</h3><p>Agents called pre-qualified leads supplied by the client, gauged interest, and warm-transferred qualified applicants to a loan specialist for closing.</p><p>Work@Home handled quality assurance, training, employee management, and payroll throughout the engagement.</p><span className={styles.workflow}>Client-provided leads <span aria-hidden="true">→</span> Qualification <span aria-hidden="true">→</span> Client’s closing team</span></div>
+              <div>
+                <h3>From first conversation<br />to a qualified handoff.</h3>
+                <p>In this 85-seat, three-year personal-loan engagement, agents called pre-qualified leads, gauged interest, and warm-transferred qualified applicants to a loan specialist.</p>
+                <dl className={styles.campaignScope}>
+                  <div><dt>The client’s role</dt><dd>Supplied the leads and loan specialists. The client’s specialists handled closing.</dd></div>
+                  <div><dt>Work@Home’s role</dt><dd>Handled initial qualification and warm transfers, with training, quality assurance, employee management, and payroll throughout the engagement.</dd></div>
+                </dl>
+                <span className={styles.workflow}>Client-provided leads <span aria-hidden="true">→</span> Qualification <span aria-hidden="true">→</span> Client’s closing team</span>
+              </div>
             </article>
             <div className={styles.campaigns}>
               {campaigns.map(campaign => <article className={styles.campaign} key={campaign.task}>
@@ -166,14 +176,16 @@ export default function TijuanaCallCenterPage() {
           <div className={`wrap ${styles.operatingGrid}`}>
             <div className={styles.sectionHead}>
               <p className="eyebrow">Remote delivery. Managed operations.</p>
-              <h2 id="operating-heading">Built in Tijuana.<br />Connected to you.</h2>
+              <h2 id="operating-heading">How we set up your<br />outsourced team.</h2>
               <p>Our headquarters are in Baja California. Many of our agents work from home, and client coordination, training, instructions, and payments happen online. You can work with us without an office visit.</p>
+              <p>The setup discussion connects your business goals to the work agents will do. Responsibilities vary with your engagement model, so we agree the scope before launch.</p>
               <a className={styles.textLink} href="/#team">Meet our leadership <span aria-hidden="true">↗</span></a>
             </div>
             <ol className={styles.steps}>
-              <li><span className={styles.number}>01</span><div><h3>Define the work</h3><p>Agree on responsibilities, qualification criteria, coverage, systems, reporting, and escalation paths.</p></div></li>
-              <li><span className={styles.number}>02</span><div><h3>Prepare the team</h3><p>Match staffing and training to your workflow, brand, and chosen engagement model.</p></div></li>
-              <li><span className={styles.number}>03</span><div><h3>Manage the delivery</h3><p>Launch with agreed oversight, quality checks, and communication so you can follow the work as it happens.</p></div></li>
+              <li><span className={styles.number}>01</span><div><h3>Define scope and coverage</h3><p>Outline the tasks, expected workload, required languages, and coverage hours in your business time zone. Agree which responsibilities stay with your team and which move to Work@Home.</p></div></li>
+              <li><span className={styles.number}>02</span><div><h3>Plan training and system access</h3><p>Agree the training materials, workflows, brand guidelines, and access agents need in your systems. Match staffing and training responsibilities to your chosen engagement model.</p></div></li>
+              <li><span className={styles.number}>03</span><div><h3>Set handoffs and escalation paths</h3><p>For lead qualification, define the criteria for a warm transfer and the callback process when a specialist is unavailable. For support, agree what agents can resolve and who handles escalations.</p></div></li>
+              <li><span className={styles.number}>04</span><div><h3>Agree quality checks and reporting</h3><p>Set expectations for oversight, quality assurance, progress reporting, and communication. Define the contacts and review process for campaign changes so both teams know how to raise issues and adjust the work.</p></div></li>
             </ol>
           </div>
         </section>

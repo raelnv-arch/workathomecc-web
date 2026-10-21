@@ -550,6 +550,9 @@ export default function HomePage() {
                   target="_blank" rel="noopener noreferrer">
                   <span>WhatsApp</span><b>+52 663 436 1001</b>
                 </a>
+                <a className="contact-chip" href="tel:+16194326966">
+                  <span>US Phone</span><b>+1 619 432 6966</b>
+                </a>
                 <a className="contact-chip" href="mailto:info@workathomecc.com">
                   <span>Email</span><b>info@workathomecc.com</b>
                 </a>

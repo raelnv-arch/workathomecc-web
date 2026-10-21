@@ -187,9 +187,14 @@ export default function OpportunitiesPage() {
             <a className="foot-logo" href="/" aria-label="Work@Home Call Center — home">
               <img src="/logo-mist.png" alt="Work@Home Call Center" />
             </a>
-            <div className="foot-col">
-              175 SW 7th Street, Suite 1517-336<br />Miami, FL 33130
-            </div>
+            <address className="foot-col foot-address">
+              Ave Manuel M de Leon 1301 1 1001<br />
+              Rio Tijuana Zona Oriente<br />
+              Tijuana, Baja California, Mexico 22010
+            </address>
+            <address className="foot-col foot-address">
+              175 SW 7th Street, Suite 1517-336<br />Miami, FL 33130, United States
+            </address>
             <div className="foot-links foot-col">
               <a href="/#services">Services</a>
               <a href="/#focus">Focus Portal</a>

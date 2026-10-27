@@ -90,3 +90,104 @@ test('server rejection or a network failure preserves entries and never counts a
     assert.deepEqual(harness.states, ['sending', 'error']);
   }
 });
+
+// Exercise the component's delegated listener with the real consent/payload code.
+function contactHarness() {
+  let choice = 'accepted';
+  const events = [];
+  const listeners = new Map();
+  const cleanups = [];
+  const window = { location: { hostname: 'www.workathomecc.com', pathname: '/' }, gtag: (...args) => events.push(args) };
+  const analytics = load('app/analytics.ts', { window, localStorage: { getItem: () => choice } });
+  class Element {
+    constructor(href) { this.href = href; }
+    closest(selector) {
+      assert.equal(selector, 'a');
+      return this.href === null ? null : { getAttribute: name => name === 'href' ? this.href : null };
+    }
+  }
+  const component = load('app/WebsiteAnalytics.tsx', {
+    window, Element,
+    document: {
+      addEventListener: (name, handler) => listeners.set(name, handler),
+      removeEventListener: (name, handler) => { if (listeners.get(name) === handler) listeners.delete(name); },
+    },
+  }, {
+    'next/script': { default: () => null },
+    'next/navigation': { usePathname: () => '/' },
+    react: {
+      useRef: value => ({ current: value }), useState: value => [value, () => {}],
+      useEffect: effect => { const cleanup = effect(); if (cleanup) cleanups.push(cleanup); },
+    },
+    './analytics': analytics,
+  }).default;
+  window.addEventListener = () => {};
+  window.removeEventListener = () => {};
+  component();
+  return {
+    events, window, setChoice: value => { choice = value; },
+    click: href => listeners.get('click')({ target: new Element(href) }),
+    clickNonElement: () => listeners.get('click')({ target: {} }),
+    cleanup: () => cleanups.forEach(cleanup => cleanup()), listeners,
+  };
+}
+
+test('contact links (including nested telephone content) emit click intent with only fixed fields', () => {
+  const harness = contactHarness();
+  for (const [href, method] of [
+    ['tel:+16194326966', 'phone'],
+    ['mailto:private@example.com?subject=private', 'email'],
+    ['https://wa.me/526634361001?text=private', 'whatsapp'],
+  ]) {
+    harness.click(href);
+    const event = harness.events.at(-1);
+    assert.equal(event[0], 'event');
+    assert.equal(event[1], 'contact_click');
+    assert.equal(JSON.stringify(event[2]), JSON.stringify({
+      contact_method: method, inquiry_type: 'client', page_path: '/', transport_type: 'beacon',
+    }));
+  }
+  assert.equal(harness.events.length, 3);
+  for (const href of [null, '', '/opportunities', 'https://example.com']) harness.click(href);
+  harness.clickNonElement();
+  assert.equal(harness.events.length, 3);
+  harness.cleanup();
+  assert.equal(harness.listeners.has('click'), false);
+});
+
+test('telephone clicks require current consent and a production hostname', () => {
+  const harness = contactHarness();
+  for (const choice of [null, 'declined', 'invalid']) {
+    harness.setChoice(choice);
+    harness.click('tel:+16194326966');
+  }
+  harness.setChoice('accepted');
+  for (const hostname of ['localhost', '127.0.0.1', 'workathomecc-web.vercel.app']) {
+    harness.window.location.hostname = hostname;
+    harness.click('tel:+16194326966');
+  }
+  assert.equal(harness.events.length, 0);
+  for (const hostname of ['workathomecc.com', 'www.workathomecc.com']) {
+    harness.window.location.hostname = hostname;
+    harness.click('tel:+16194326966');
+  }
+  assert.equal(harness.events.length, 2);
+  harness.setChoice('declined');
+  harness.click('tel:+16194326966');
+  assert.equal(harness.events.length, 2);
+  harness.setChoice('accepted');
+  harness.window.gtag = () => { throw new Error('Blocked analytics'); };
+  assert.doesNotThrow(() => harness.click('tel:+16194326966'));
+});
+
+test('recruitment routes exclude all contact methods from client inquiries', () => {
+  const harness = contactHarness();
+  for (const pathname of ['/opportunities', '/opportunities/', '/opportunities/apply']) {
+    harness.window.location.pathname = pathname;
+    for (const href of ['tel:+16194326966', 'mailto:jobs@example.com', 'https://wa.me/526634361001']) harness.click(href);
+  }
+  assert.equal(harness.events.length, 0);
+  harness.window.location.pathname = '/';
+  harness.click('tel:+16194326966');
+  assert.equal(harness.events.length, 1);
+});

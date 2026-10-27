@@ -13,12 +13,15 @@ Events:
 
 - `page_view`: one per initial visit or Next.js pathname change after consent.
 - `generate_lead`: only after Formspree accepts a consultation POST.
-- `contact_click`: WhatsApp/email intent, not a confirmed inquiry or conversation.
+- `contact_click`: WhatsApp/email/telephone click intent, not a completed call,
+  confirmed inquiry, conversation, or qualified lead. Telephone clicks use
+  `contact_method: phone`; they do not confirm that a call connected.
 
 Inquiry parameters are restricted to `contact_method`, `inquiry_type: client`,
-`page_path`, and `transport_type`. No form values are sent to Analytics. Contact
-clicks on `/opportunities` are excluded from the client inquiry events. Automatic
-form events are disabled in the stream to keep recruitment and confirmed leads
+`page_path`, and `transport_type`. No form values, phone numbers, contact-link
+URLs, or link text are sent in these custom inquiry events. Contact clicks on
+`/opportunities` and its subpaths are excluded from client inquiry events.
+Automatic form events are disabled in the stream to keep recruitment and confirmed leads
 separate. Job application delivery remains independent through Web3Forms.
 
 Required stream settings (configured October 6, 2026):

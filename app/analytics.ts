@@ -22,7 +22,7 @@ export function isProductionWebsite() {
 
 // A fixed set of event fields: never pass form values or contact details to GA.
 export function trackInquiryEvent(name: 'generate_lead' | 'contact_click', parameters: {
-  contact_method: 'consultation_form' | 'whatsapp' | 'email';
+  contact_method: 'consultation_form' | 'whatsapp' | 'email' | 'phone';
 }) {
   if (readAnalyticsChoice() !== 'accepted' || !isProductionWebsite()) return;
   try {

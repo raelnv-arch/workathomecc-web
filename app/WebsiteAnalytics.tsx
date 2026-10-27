@@ -56,6 +56,7 @@ export default function WebsiteAnalytics() {
       const anchor = event.target.closest('a');
       const href = anchor?.getAttribute('href') || '';
       if (href.startsWith('mailto:')) trackInquiryEvent('contact_click', { contact_method: 'email' });
+      else if (href.startsWith('tel:')) trackInquiryEvent('contact_click', { contact_method: 'phone' });
       else if (href.startsWith('https://wa.me/')) trackInquiryEvent('contact_click', { contact_method: 'whatsapp' });
     };
     document.addEventListener('click', handleClick);

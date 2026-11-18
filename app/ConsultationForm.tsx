@@ -25,15 +25,61 @@ export default function ConsultationForm() {
     } finally { submitting.current = false; }
   }
 
-  return <form id="consultation-form" action="https://formspree.io/f/meelndov" method="POST" onSubmit={submit} aria-busy={status === 'sending'}>
+  return <form id="consultation-form" aria-labelledby="consultation-heading" action="https://formspree.io/f/meelndov" method="POST" onSubmit={submit} aria-busy={status === 'sending'}>
     <div className="form-grid">
       <div className="field"><label htmlFor="f-first">First name</label><input id="f-first" type="text" name="firstName" autoComplete="given-name" required placeholder="John" /></div>
       <div className="field"><label htmlFor="f-last">Last name</label><input id="f-last" type="text" name="lastName" autoComplete="family-name" required placeholder="Doe" /></div>
     </div>
     <div className="field"><label htmlFor="f-email">Work email</label><input id="f-email" type="email" name="email" autoComplete="email" required placeholder="john@company.com" /></div>
+    <div className="field"><label htmlFor="f-phone">Phone number (optional)</label><input id="f-phone" type="tel" name="phone" autoComplete="tel" inputMode="tel" placeholder="+1 (555) 123-4567" /></div>
     <div className="field"><label htmlFor="f-company">Company</label><input id="f-company" type="text" name="company" autoComplete="organization" placeholder="Your organization" /></div>
     <div className="field"><label htmlFor="f-industry">Industry (optional)</label><input id="f-industry" type="text" name="industry" placeholder="Healthcare, tech, retail…" /></div>
     <div className="field"><label htmlFor="f-message">How can we help?</label><textarea id="f-message" name="message" required rows={3} placeholder="Tell us about your operational needs…" /></div>
+    <fieldset className="consent-group">
+      <legend className="consent-legend">
+        Consent <span className="consent-req">(Required)</span>
+      </legend>
+      <div className="consent-row">
+        <input
+          id="f-consent-contact"
+          className="consent-check"
+          type="checkbox"
+          name="contactConsent"
+          value="Consented"
+          required
+          onInvalid={(e) => e.currentTarget.setCustomValidity('Please confirm your consent to be contacted before submitting.')}
+          onChange={(e) => e.currentTarget.setCustomValidity('')}
+        />
+        <span className="consent-copy">
+          <label htmlFor="f-consent-contact">
+            I consent to be contacted via phone and email as described in the TCPA Disclosure.
+          </label>{' '}
+          <a href="/privacy#tcpa-disclosure" target="_blank" rel="noopener noreferrer">
+            See TCPA disclosure
+          </a>
+        </span>
+      </div>
+    </fieldset>
+    <fieldset className="consent-group">
+      <legend className="consent-legend">SMS Consent</legend>
+      <div className="consent-row">
+        <input
+          id="f-consent-sms"
+          className="consent-check"
+          type="checkbox"
+          name="smsConsent"
+          value="Consented"
+        />
+        <span className="consent-copy">
+          <label htmlFor="f-consent-sms">
+            I consent to receive SMS messages as described in the TCPA Disclosure. (Message &amp; data rates may apply. Reply STOP to opt out.)
+          </label>{' '}
+          <a href="/privacy#tcpa-disclosure" target="_blank" rel="noopener noreferrer">
+            See TCPA disclosure
+          </a>
+        </span>
+      </div>
+    </fieldset>
     <button type="submit" className="btn btn-signal" disabled={status === 'sending'}>{status === 'sending' ? 'Sending…' : 'Send message'}</button>
     <div aria-live="polite" aria-atomic="true">
       {status === 'success' && <p className="consultation-status">Thank you. Your consultation request has been received. Our team will follow up with you.</p>}

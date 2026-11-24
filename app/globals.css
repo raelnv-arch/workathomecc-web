@@ -501,6 +501,7 @@ html { scroll-behavior: smooth; }
 .field input::placeholder, .field textarea::placeholder, .q input[type="text"]::placeholder { color: rgba(143, 161, 191, .45); }
 .field textarea { resize: none; }
 .form-card .btn { width: 100%; justify-content: center; margin-top: 6px; }
+.form-extra { display: none; }
 .form-note { font-family: var(--mono); font-size: 9.5px; letter-spacing: .14em; color: var(--mist); opacity: .6; text-align: center; margin-top: 14px; text-transform: uppercase; }
 
 /* Consultation form consent checkboxes */

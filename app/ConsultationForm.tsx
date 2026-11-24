@@ -12,6 +12,11 @@ export default function ConsultationForm() {
     if (submitting.current) return;
     const form = event.currentTarget;
     const data = new FormData(form);
+    if (String(data.get('_gotcha') ?? '').trim() !== '') {
+      form.reset();
+      setStatus('success');
+      return;
+    }
     submitting.current = true;
     setStatus('sending');
     try {
@@ -80,6 +85,10 @@ export default function ConsultationForm() {
         </span>
       </div>
     </fieldset>
+    <div className="form-extra" aria-hidden="true">
+      <label htmlFor="f-gotcha">Leave this field empty</label>
+      <input id="f-gotcha" type="text" name="_gotcha" tabIndex={-1} autoComplete="off" />
+    </div>
     <button type="submit" className="btn btn-signal" disabled={status === 'sending'}>{status === 'sending' ? 'Sending…' : 'Send message'}</button>
     <div aria-live="polite" aria-atomic="true">
       {status === 'success' && <p className="consultation-status">Thank you. Your consultation request has been received. Our team will follow up with you.</p>}

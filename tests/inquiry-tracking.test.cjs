@@ -44,20 +44,23 @@ test('page locations retain marketing attribution but remove arbitrary query fie
   assert.equal(analytics.analyticsPageLocation(), 'https://www.workathomecc.com/tijuana-call-center?utm_source=newsletter&utm_medium=email');
 });
 
-function formHarness(fetch) {
+function formHarness(fetch, values = {}) {
   const states = [];
   const events = [];
   let resets = 0;
   const component = load('app/ConsultationForm.tsx', {
     fetch,
-    FormData: class { constructor(form) { this.form = form; } },
+    FormData: class {
+      constructor(form) { this.form = form; }
+      get(name) { return Object.prototype.hasOwnProperty.call(this.form.values, name) ? this.form.values[name] : null; }
+    },
   }, {
     react: { useRef: value => ({ current: value }), useState: () => ['idle', value => states.push(value)] },
     './analytics': { trackInquiryEvent: (...args) => events.push(args) },
   }).default;
   const element = component();
-  const form = { action: 'https://formspree.io/f/meelndov', reset: () => resets++ };
-  return { submit: () => element.props.onSubmit({ preventDefault() {}, currentTarget: form }), states, events, resets: () => resets };
+  const form = { action: 'https://formspree.io/f/meelndov', reset: () => resets++, values };
+  return { element, submit: () => element.props.onSubmit({ preventDefault() {}, currentTarget: form }), states, events, resets: () => resets };
 }
 
 test('confirmed submission emits one lead; duplicate clicks while pending are suppressed', async () => {
@@ -89,4 +92,36 @@ test('server rejection or a network failure preserves entries and never counts a
     assert.equal(harness.resets(), 0);
     assert.deepEqual(harness.states, ['sending', 'error']);
   }
+});
+
+test('honeypot field is hidden from assistive tech and silently drops filled spam without sending or counting a lead', async () => {
+  let requests = 0;
+  const harness = formHarness(() => {
+    requests++;
+    return Promise.resolve({ ok: true });
+  }, { _gotcha: 'http://spam.example' });
+
+  const findNodes = (node, list = []) => {
+    if (!node || typeof node !== 'object') return list;
+    list.push(node);
+    const children = node.props?.children;
+    if (Array.isArray(children)) children.forEach(c => findNodes(c, list));
+    else if (children) findNodes(children, list);
+    return list;
+  };
+  const nodes = findNodes(harness.element);
+  const wrapper = nodes.find(n => n.type === 'div' && n.props?.className === 'form-extra');
+  const input = nodes.find(n => n.type === 'input' && n.props?.name === '_gotcha');
+  assert.ok(wrapper, 'expected .form-extra wrapper');
+  assert.equal(wrapper.props['aria-hidden'], 'true');
+  assert.ok(input, 'expected _gotcha input');
+  assert.equal(input.props.type, 'text');
+  assert.equal(input.props.tabIndex, -1);
+  assert.equal(input.props.autoComplete, 'off');
+
+  await harness.submit();
+  assert.equal(requests, 0);
+  assert.equal(harness.events.length, 0);
+  assert.equal(harness.resets(), 1);
+  assert.deepEqual(harness.states, ['success']);
 });
